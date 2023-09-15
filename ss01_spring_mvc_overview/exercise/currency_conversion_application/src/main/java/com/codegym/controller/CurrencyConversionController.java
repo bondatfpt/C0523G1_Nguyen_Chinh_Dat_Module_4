@@ -18,7 +18,7 @@ public class CurrencyConversionController {
         return "currency-conversion";
     }
     @PostMapping("/currency-conversion/vnd")
-    public String showResultVnd(@RequestParam String vnd, Model model) {
+    public String showResultVnd(@RequestParam double vnd, Model model) {
         double resultVnd = currencyConversion.convertCurrencyVndToUsd(vnd);
         model.addAttribute("vnd", vnd);
         model.addAttribute("resultVnd", resultVnd);
@@ -26,7 +26,7 @@ public class CurrencyConversionController {
     }
 
     @PostMapping("/currency-conversion/usd")
-    public String showResultUsd(@RequestParam String usd, Model model) {
+    public String showResultUsd(@RequestParam double usd, Model model) {
         double resultUsd = currencyConversion.convertCurrencyUsdToVnd(usd);
         model.addAttribute("usd",usd );
         model.addAttribute("resultUsd", resultUsd);

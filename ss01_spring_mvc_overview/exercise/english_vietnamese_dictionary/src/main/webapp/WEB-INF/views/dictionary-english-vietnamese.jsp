@@ -13,7 +13,7 @@
 <body>
 <h2>Dictionary</h2>
 <form action="/translate" method="post">
-    <lable>Enter an english word</lable>
+    <label for="word" >Enter an english word</label>
     <input type="text" name="word" id="word" required>
     <button type="submit">Translate</button>
     <p>Result: ${result}</p>
