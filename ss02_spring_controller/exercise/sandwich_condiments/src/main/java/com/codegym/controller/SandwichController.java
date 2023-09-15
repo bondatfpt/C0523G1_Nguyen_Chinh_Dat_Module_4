@@ -14,27 +14,29 @@ import java.util.List;
 @Controller
 public class SandwichController {
     @GetMapping("/showFormCondiments")
-    public String showFormCondiments (){
+    public String showFormCondiments() {
         return "form-sandwich-condiments";
     }
+
     @PostMapping("/listCondiments")
-    public String chooseCondiments (@RequestParam(required = false) String lettuce,
-                                    @RequestParam(required = false) String tomato,
-                                    @RequestParam(required = false) String mustard,
-                                    @RequestParam (required = false) String sprouts,
-                                    Model model){
+    public String chooseCondiments(@RequestParam(required = false) String lettuce,
+                                   @RequestParam(required = false) String tomato,
+                                   @RequestParam(required = false) String mustard,
+                                   @RequestParam(required = false) String sprouts,
+                                   Model model) {
         List<String> stringList = new ArrayList<>();
-        String [] condiments = {lettuce,tomato,mustard,sprouts};
+        String[] condiments = {lettuce, tomato, mustard, sprouts};
         for (int i = 0; i < condiments.length; i++) {
-            if (condiments[i] != null){
+            if (condiments[i] != null) {
                 stringList.add(condiments[i]);
             }
         }
-        if(stringList.isEmpty()){
-            model.addAttribute("condiments","Normal Sandwich");
+        if (stringList.isEmpty()) {
+            model.addAttribute("condiments", "No codiments");
+        } else {
+            Sandwich sandwich = new Sandwich(stringList);
+            model.addAttribute("condiments", sandwich);
         }
-        Sandwich sandwich = new Sandwich(stringList);
-        model.addAttribute("condiments", sandwich);
         return "form-sandwich-condiments";
     }
 }
