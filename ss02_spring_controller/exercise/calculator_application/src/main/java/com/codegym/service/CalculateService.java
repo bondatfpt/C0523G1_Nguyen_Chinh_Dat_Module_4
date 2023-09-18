@@ -2,7 +2,7 @@ package com.codegym.service;
 
 import org.springframework.stereotype.Service;
 @Service
-public class Calculate {
+public class CalculateService implements ICalculateService {
     public double calculate (double firstNum, String operator, double secondNum){
         double result = 0 ;
         switch (operator){

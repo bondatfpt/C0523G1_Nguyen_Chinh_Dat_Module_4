@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
-import com.codegym.service.Calculate;
+import com.codegym.service.CalculateService;
+import com.codegym.service.ICalculateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CalculatorController {
     @Autowired
-    private Calculate calculate;
+    private ICalculateService iCalculateService;
     @GetMapping("")
     public String showFormCalculator() {
         return "index";
@@ -26,7 +27,7 @@ public class CalculatorController {
         if(secondNum == 0 && ("/".equals(operator))){
             model.addAttribute("result","Can't divided zero!");
         } else {
-            double result = calculate.calculate(firstNum,operator,secondNum);
+            double result = iCalculateService.calculate(firstNum,operator,secondNum);
             model.addAttribute("result", result);
         }
         return "index";
