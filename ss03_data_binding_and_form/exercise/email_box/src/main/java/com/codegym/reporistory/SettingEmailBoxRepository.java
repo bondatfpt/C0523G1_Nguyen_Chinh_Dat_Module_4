@@ -9,9 +9,6 @@ public class SettingEmailBoxRepository implements ISettingEmailBoxRepository {
    private static List<SettingEmailBox> settingEmailBoxList = new ArrayList<>();
     static {
         settingEmailBoxList.add(new SettingEmailBox("Chinese",5,true,"Chinh Dat"));
-        settingEmailBoxList.add(new SettingEmailBox("Vietnamese",10,false,"Chinh Dat"));
-        settingEmailBoxList.add(new SettingEmailBox("Japanese",15,true,"Chinh Dat"));
-        settingEmailBoxList.add(new SettingEmailBox("English",25,false,"Chinh Dat"));
     }
     @Override
     public List<SettingEmailBox> getAll() {

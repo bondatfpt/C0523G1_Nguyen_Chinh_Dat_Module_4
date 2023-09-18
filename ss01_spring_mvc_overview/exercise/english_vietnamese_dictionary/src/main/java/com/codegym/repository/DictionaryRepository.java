@@ -1,8 +1,10 @@
 package com.codegym.repository;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
-
+@Repository
 public class DictionaryRepository implements IDictionaryRepository {
     private static Map<String, String> dictionary = new HashMap<>();
 

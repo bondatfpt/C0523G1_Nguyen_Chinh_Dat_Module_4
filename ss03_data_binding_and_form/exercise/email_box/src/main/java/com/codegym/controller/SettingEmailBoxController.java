@@ -28,7 +28,9 @@ public class SettingEmailBoxController {
         int [] pageList = iSettingEmailBoxService.getListPages();
         return pageList;
     }
-    @PostMapping ("/save")
+    @GetMapping("/save")
+    public String saveSetting ()
+    @PostMapping ("/update")
     public String updateSetting (@ModelAttribute("settingEmailBox") SettingEmailBox settingEmailBox, Model model){
         model.addAttribute("languages",settingEmailBox.getLanguages());
         model.addAttribute("pages",settingEmailBox.getPages());
