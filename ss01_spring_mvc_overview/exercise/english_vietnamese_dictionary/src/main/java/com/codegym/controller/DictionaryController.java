@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.service.DictionaryService;
+import com.codegym.service.IDictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +14,14 @@ import java.util.Map;
 @Controller
 public class DictionaryController {
     @Autowired
-    private  DictionaryService dictionaryService;
+    private IDictionaryService iDictionaryService;
     @GetMapping("/showFormDictionary")
     public String showFormDictionary(){
         return "dictionary-english-vietnamese";
     }
     @PostMapping ("/translate")
     public String translate (@RequestParam String word, Model model){
-       String result = dictionaryService.lookUpDictionary(word);
+       String result = iDictionaryService.lookUpDictionary(word);
        model.addAttribute("result",result);
         return "dictionary-english-vietnamese";
     }
