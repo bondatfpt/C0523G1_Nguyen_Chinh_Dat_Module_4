@@ -6,9 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -32,7 +30,7 @@ public class SandwichController {
             }
         }
         if (stringList.isEmpty()) {
-            model.addAttribute("condiments", "No codiments");
+            model.addAttribute("condiments", "No condiments");
         } else {
             Sandwich sandwich = new Sandwich(stringList);
             model.addAttribute("condiments", sandwich);
