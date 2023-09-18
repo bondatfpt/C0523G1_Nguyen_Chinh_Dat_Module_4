@@ -1,8 +1,7 @@
 package com.codegym.model;
 
-import java.util.Arrays;
-
 public class SettingEmailBox {
+    private int id;
     private String languages;
     private int  pages;
     private boolean spamsFilter;
@@ -11,11 +10,20 @@ public class SettingEmailBox {
     public SettingEmailBox() {
     }
 
-    public SettingEmailBox(String languages, int pages, boolean spamsFilter, String signature) {
+    public SettingEmailBox(int id,String languages, int pages, boolean spamsFilter, String signature) {
+        this.id = id;
         this.languages = languages;
         this.pages = pages;
         this.spamsFilter = spamsFilter;
         this.signature = signature;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLanguages() {
@@ -53,7 +61,8 @@ public class SettingEmailBox {
     @Override
     public String toString() {
         return "SettingEmailBox{" +
-                "languages=" +languages+
+                "id=" + id +
+                ", languages='" + languages + '\'' +
                 ", pages=" + pages +
                 ", spamsFilter=" + spamsFilter +
                 ", signature='" + signature + '\'' +

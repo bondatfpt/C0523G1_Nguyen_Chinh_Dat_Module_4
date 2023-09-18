@@ -1,14 +1,17 @@
 package com.codegym.service;
 
 import com.codegym.model.SettingEmailBox;
-import com.codegym.reporistory.ISettingEmailBoxRepository;
-import com.codegym.reporistory.SettingEmailBoxRepository;
+import com.codegym.repository.ISettingEmailBoxRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class SettingEmailBoxService implements ISettingEmailBoxService{
-    private ISettingEmailBoxRepository iSettingEmailBoxRepository = new SettingEmailBoxRepository();
+    @Autowired
+    private ISettingEmailBoxRepository iSettingEmailBoxRepository;
+
     @Override
     public List<SettingEmailBox> getAll() {
         List<SettingEmailBox> settingEmailBoxList = iSettingEmailBoxRepository.getAll();
@@ -28,7 +31,13 @@ public class SettingEmailBoxService implements ISettingEmailBoxService{
     }
 
     @Override
-    public void save(SettingEmailBox settingEmailBox) {
-        iSettingEmailBoxRepository.save(settingEmailBox);
+    public void update(SettingEmailBox settingEmailBox) {
+        iSettingEmailBoxRepository.update(settingEmailBox);
+    }
+
+    @Override
+    public SettingEmailBox getSettingById(int id) {
+        SettingEmailBox settingEmailBox = iSettingEmailBoxRepository.getSettingById(id);
+        return settingEmailBox;
     }
 }
