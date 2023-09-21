@@ -14,34 +14,34 @@
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <div style="text-align: center" class="form-outline mb-4"><h2>Update</h2></div>
-              <form th:object="${blog}" action="/update" method="post">
-                <input type="hidden" th:field="*{id}">
+              <div style="text-align: center" class="form-outline mb-4"><h2>Blog Details</h2></div>
+              <form th:object="${blogDetails}" action="/showDetails" method="post">
                 <div class="form-outline mb-4">
                   <label  class="form-label" for="name">Name</label>
-                  <input th:field="*{name}" type="text" id="name" name="name" class="form-control form-control-lg" required/>
+                  <input readonly th:field="*{name}" type="text" id="name" name="name" class="form-control form-control-lg" required/>
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="content">Tittle</label>
-                  <input th:field="*{tittle}" type="text" id="tittle" name="tittle"
+                  <input  readonly th:field="*{tittle}" type="text" id="tittle" name="tittle"
                          class="form-control form-control-lg" required/>
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="content">Content</label>
-                  <input th:field="*{content}" type="text" id="content" name="content"
+                  <input readonly th:field="*{content}" type="text" id="content" name="content"
                          class="form-control form-control-lg" required/>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input  th:field="*{dateOfWriting}" type="hidden" id="dateOfWriting" name="dateOfWriting"
+                  <label class="form-label" for="dateOfWriting">Date Of Writing</label>
+                  <input readonly th:field="*{dateOfWriting}" type="date" id="dateOfWriting" name="dateOfWriting"
                          class="form-control form-control-lg" required/>
                 </div>
                 <div class="form-outline mb-4">
-                  <button style="margin-left: 110px;padding: 15px;border: none;border-radius: 35px;width: 50%;" id="submitButton" type="submit">
-                    Done
-                  </button>
+                  <a href="/" style="margin-left: 110px;padding: 15px;border: none;border-radius: 35px;width: 50%;" id="submitButton" type="submit">
+                    Back
+                  </a>
                 </div>
               </form>
             </div>

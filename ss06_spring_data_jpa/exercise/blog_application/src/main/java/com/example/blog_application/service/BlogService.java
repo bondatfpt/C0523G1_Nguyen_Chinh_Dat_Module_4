@@ -17,11 +17,21 @@ public class BlogService implements IBlogService{
 
     @Override
     public void save(Blog blog) {
-        Blog blog1 = iBlogRepository.save(blog);
+        iBlogRepository.save(blog);
     }
 
     @Override
     public Blog findById(int id) {
         return iBlogRepository.findById(id).get();
+    }
+
+    @Override
+    public boolean delete(int id) {
+        try{
+            iBlogRepository.deleteById(id);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }

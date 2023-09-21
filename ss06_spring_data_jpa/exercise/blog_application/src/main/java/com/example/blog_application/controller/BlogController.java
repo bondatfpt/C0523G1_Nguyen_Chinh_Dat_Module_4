@@ -42,4 +42,21 @@ public class BlogController {
         model.addAttribute("blog",blog);
         return "form-update";
     }
+    @PostMapping("update")
+    public String update (Blog blog){
+        System.out.println(blog);
+        iBlogService.save(blog);
+        return "redirect:/";
+    }
+    @GetMapping("showDetails")
+    public String showDetails (@RequestParam int id, Model model){
+        Blog blog = iBlogService.findById(id);
+        model.addAttribute("blogDetails",blog);
+        return "form-details";
+    }
+    @PostMapping("delete")
+    public String delete (@RequestParam int idDelete){
+        iBlogService.delete(idDelete);
+        return "redirect:/";
+    }
 }
