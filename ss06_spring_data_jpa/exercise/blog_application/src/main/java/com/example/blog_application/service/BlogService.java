@@ -16,8 +16,13 @@ public class BlogService implements IBlogService{
     }
 
     @Override
-    public void save(Blog blog) {
-        iBlogRepository.save(blog);
+    public boolean save(Blog blog) {
+        try {
+            iBlogRepository.save(blog);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override

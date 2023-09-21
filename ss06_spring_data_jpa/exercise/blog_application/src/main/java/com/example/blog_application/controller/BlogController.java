@@ -44,7 +44,6 @@ public class BlogController {
     }
     @PostMapping("update")
     public String update (Blog blog){
-        System.out.println(blog);
         iBlogService.save(blog);
         return "redirect:/";
     }
