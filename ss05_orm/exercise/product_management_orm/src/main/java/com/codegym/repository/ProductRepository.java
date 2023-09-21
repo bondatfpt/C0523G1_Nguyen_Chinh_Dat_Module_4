@@ -34,13 +34,18 @@ public class ProductRepository implements IProductRepository {
 
     @Transactional
     @Override
-    public void update(Product product, int id) {
-        Product productEntity = getProductById(id);
-        productEntity.setName(product.getName());
-        productEntity.setDescription(product.getDescription());
-        productEntity.setManufacturer(product.getManufacturer());
-        productEntity.setPrice(product.getPrice());
-        entityManager.merge(productEntity);
+    public boolean update(Product product, int id) {
+        try {
+            Product productEntity = getProductById(id);
+            productEntity.setName(product.getName());
+            productEntity.setDescription(product.getDescription());
+            productEntity.setManufacturer(product.getManufacturer());
+            productEntity.setPrice(product.getPrice());
+            entityManager.merge(productEntity);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Transactional
@@ -52,8 +57,8 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public List<Product> searchByName(String name) {
-       TypedQuery<Product> query = entityManager.createQuery("from Product where name =:name", Product.class);
-       query.setParameter("name",name);
-       return query.getResultList();
+        TypedQuery<Product> query = entityManager.createQuery("from Product where name =:name", Product.class);
+        query.setParameter("name", name);
+        return query.getResultList();
     }
 }

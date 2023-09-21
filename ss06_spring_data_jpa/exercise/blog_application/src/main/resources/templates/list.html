@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/showFormCreate">Create Blog</a>
+        <form action="/search">
+            <input required name="nameSearch" type="text" placeholder="Enter a name product">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Tittle</th>
+        <th scope="col">Content</th>
+        <th scope="col">Date Of Writing</th>
+        <th scope="col">See Details</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blog,status:${list}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${blog.name}"></td>
+        <td th:text="${blog.tittle}"></td>
+        <td th:text="${blog.content}"></td>
+        <td th:text="${blog.dateOfWriting}"></td>
+        <td><a href="">See details</a></td>
+        <td><a th:href="@{/showFormUpdate(id=${blog.id})}">Update</a></td>
+        <td><a href="">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+</script>
+</body>
+</html>
