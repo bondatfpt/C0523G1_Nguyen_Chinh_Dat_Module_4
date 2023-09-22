@@ -35,14 +35,14 @@ public class ProductRepository implements IProductRepository {
     @Transactional
     @Override
     public boolean update(Product product, int id) {
-        try {
-            Product productEntity = getProductById(id);
+        Product productEntity = getProductById(id);
+        if (productEntity != null) {
             productEntity.setName(product.getName());
             productEntity.setDescription(product.getDescription());
             productEntity.setManufacturer(product.getManufacturer());
             productEntity.setPrice(product.getPrice());
             entityManager.merge(productEntity);
-        }catch (Exception e){
+        }else {
             return false;
         }
         return true;
