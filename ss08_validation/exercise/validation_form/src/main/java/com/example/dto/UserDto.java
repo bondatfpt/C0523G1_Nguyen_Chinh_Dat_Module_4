@@ -5,7 +5,7 @@ import org.springframework.validation.Validator;
 
 import javax.validation.constraints.*;
 
-public class UserDto implements Validator {
+public class UserDto  {
     private int id;
     @Size(min = 5,max = 45,message = "Độ dài tối thiểu 5 kí tự, nhiều nhất 45 kí tự!")
     @Pattern(regexp = "^[A-Za-z]+$", message = "Họ chỉ nên chứa các kí tự là chữ cái và viết không dấu!")
@@ -80,11 +80,4 @@ public class UserDto implements Validator {
         this.email = email;
     }
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {}
 }

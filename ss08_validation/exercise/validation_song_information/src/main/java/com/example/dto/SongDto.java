@@ -1,13 +1,10 @@
 package com.example.dto;
 
 
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class SongDto implements Validator {
+public class SongDto {
     private int id;
     @Size(max = 800,message = "Tên bài hát tối đa 800 kí tự và viết không dấu!")
     @Pattern(regexp = "^[A-Z0-9a-z\\s]+$", message = "Tên bài hát không được chứa kí tự đặc biệt!")
@@ -16,7 +13,7 @@ public class SongDto implements Validator {
     @Pattern(regexp = "^[A-Z0-9a-z\\s]+$", message = "Tên tác giả không được chứa kí tự đặc biệt!")
     private String author;
     @Size(max = 1000, message = "Thể loại nhạc tối đa 1000 kí tự và viết không dấu!")
-    @Pattern(regexp = "^[A-Z0-9a-z,\\s]+$", message = "Thể loại nhạc có thể chứa dấu phẩy!")
+    @Pattern(regexp = "^[A-Z0-9a-z,\\s]+$", message = "Thể loại nhạc không chứa kí tự đặc biệt và có thể chứa dấu phẩy !")
     private String type;
 
     public SongDto() {
@@ -61,15 +58,6 @@ public class SongDto implements Validator {
         this.type = type;
     }
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-
-    }
 
     @Override
     public String toString() {
