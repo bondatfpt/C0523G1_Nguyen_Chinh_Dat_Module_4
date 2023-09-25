@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en" xmlns:th="http://www.thymeleaf.org">
+        <head>
+        <meta charset="UTF-8">
+        <title>Create</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<section class="bg-image">
+    <div class="mask d-flex align-items-center gradient-custom-3">
+        <div class="container ">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <div style="text-align: center" class="form-outline mb-4"><h2>Chỉnh sửa bài hát</h2></div>
+                            <form th:object="${songUpdate}" action="/update" method="post">
+                                <input th:field="*{id}">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="name">Tên bài hát</label>
+                                    <input required th:field="*{name}" type="text"  name="name" id="name" class="form-control form-control-lg"/>
+                                    <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="author">Tên tác giả</label>
+                                    <input required th:field="*{author}" type="text"  name="author" id="author" class="form-control form-control-lg"/>
+                                    <span style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="type">Thể loại nhạc</label>
+                                    <input required th:field="*{type}" type="text" name="type" id="type" class="form-control form-control-lg" />
+                                    <span style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <button style="margin-left: 110px;padding: 15px;border: none;border-radius: 35px;width: 50%;" id="submitButton" type="submit">
+                                        Hoàn thành
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
