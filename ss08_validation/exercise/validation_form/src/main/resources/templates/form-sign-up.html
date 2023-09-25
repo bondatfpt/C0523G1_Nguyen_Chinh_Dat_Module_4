@@ -15,7 +15,7 @@
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <div style="text-align: center" class="form-outline mb-4"><h2>Đăng ký</h2></div>
-                            <form th:object="${user}" action="/validateUser" method="post">
+                            <form th:object="${userDto}" action="/save" method="post">
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="firstName">Họ</label>

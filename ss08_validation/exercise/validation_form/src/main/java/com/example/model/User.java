@@ -12,22 +12,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotEmpty(message = "Họ không nên để trống !")
-    @Size(min = 5,max = 45,message = "Độ dài tối thiểu 5 kí tự, nhiều nhất 45 kí tự!")
-    @Pattern(regexp = "^[A-Za-z]+$", message = "Họ chỉ nên chứa các kí tự là chữ cái và viết không dấu!")
+
     private String firstName;
-    @NotEmpty(message = "Tên không nên để trống !")
-    @Size(min = 5,max = 45,message = "Độ dài tối thiểu 5 kí tự, nhiều nhất 45 kí tự!")
-    @Pattern(regexp = "^[A-Za-z]+$", message = "Tên chỉ nên chứa các kí tự là chữ cái và viết không dấu!")
+
     private String lastName;
-    @NotEmpty(message = "Tuổi không nên để trống!")
-    @Min(value = 18,message = "Bạn phải đủ 18 tuổi mới có thể đăng ký!")
+
     private String age;
-    @NotEmpty(message = "Số điện thoại không nên để trống!")
-    @Pattern(regexp = "^[0-9]{10,}",message = "Số điện thoại bắt đầu bằng 1 chữ số và chỉ có kí tự số và có độ dài từ 10 số trở lên!")
+
     private String phoneNumber;
-    @Email (message = "Email sai định dạng ! (VD: abc@xyz.com)")
-    @NotEmpty(message = "Email không nên để trống!")
+
     private String email;
 
     public User() {
