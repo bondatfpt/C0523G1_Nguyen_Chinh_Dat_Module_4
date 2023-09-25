@@ -19,31 +19,31 @@
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="firstName">Họ</label>
-                                    <input th:field="*{firstName}" type="text"  name="firstName" id="firstName" class="form-control form-control-lg"/>
+                                    <input required th:field="*{firstName}" type="text"  name="firstName" id="firstName" class="form-control form-control-lg"/>
                                     <span style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="lastName">Tên</label>
-                                    <input th:field="*{lastName}" type="text"  name="lastName" id="lastName" class="form-control form-control-lg"/>
+                                    <input required th:field="*{lastName}" type="text"  name="lastName" id="lastName" class="form-control form-control-lg"/>
                                     <span style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="age">Tuổi</label>
-                                    <input th:field="*{age}" type="number" name="age" id="age" class="form-control form-control-lg" />
+                                    <input required th:field="*{age}" type="number" name="age" id="age" class="form-control form-control-lg" />
                                     <span style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="phoneNumber">Số điện thoại</label>
-                                    <input th:field="*{phoneNumber}" type="text" name="phoneNumber" id="phoneNumber" class="form-control form-control-lg" />
+                                    <input required th:field="*{phoneNumber}" type="text" name="phoneNumber" id="phoneNumber" class="form-control form-control-lg" />
                                     <span style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
                                 </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="email">Email</label>
-                                    <input th:field="*{email}" type="text" name="email" id="email" class="form-control form-control-lg" />
+                                    <input required th:field="*{email}" type="text" name="email" id="email" class="form-control form-control-lg" />
                                     <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                                 </div>
                                 <div class="form-outline mb-4">
