@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
     @Autowired
-    IUserService iUserService;
+    private  IUserService iUserService;
     @GetMapping("")
     public String signUp(Model model){
         model.addAttribute("userDto", new UserDto());

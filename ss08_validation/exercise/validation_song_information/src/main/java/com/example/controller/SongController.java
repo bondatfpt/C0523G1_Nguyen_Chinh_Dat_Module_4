@@ -34,7 +34,7 @@ public class SongController {
     }
 
     @PostMapping ("save")
-    public String save (@Validated SongDto songDto, BindingResult bindingResult){
+    public String save (@Validated @ModelAttribute("songDto") SongDto songDto, BindingResult bindingResult){
         if (bindingResult.hasFieldErrors()){
             return "form-create";
         }else {

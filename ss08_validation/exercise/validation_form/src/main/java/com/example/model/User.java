@@ -1,9 +1,6 @@
 package com.example.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
@@ -12,15 +9,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Column(columnDefinition = "varchar(50) not null")
     private String firstName;
-
+    @Column(columnDefinition = "varchar(50) not null")
     private String lastName;
-
+    @Column(columnDefinition = "int not null")
     private String age;
-
+    @Column(columnDefinition = "varchar(50) not null")
     private String phoneNumber;
-
+    @Column(columnDefinition = "varchar (50) not null")
     private String email;
 
     public User() {
