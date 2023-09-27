@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>List Of Borrowed Books</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/}">List Books</a>
+  </div>
+</nav>
+<span style="color: red" th:text="${messageError}"></span>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Book Loan Code</th>
+    <th scope="col">Borrowed Day</th>
+    <th scope="col">Name Of  Book</th>
+    <th scope="col">Give Book Back</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="order:${borrowedList}">
+    <td th:text="${order.id}"></td>
+    <td th:text="${order.bookLoanCode}"></td>
+    <td th:text="${order.borrowedDay}"></td>
+    <td th:text="${order.nameOfBook}"></td>
+    <td><button data-bs-toggle="modal" data-bs-target="#exampleModal"
+                th:attr="onclick= |sendInforToModal('${order.id}','${order.book.getId()}','${order.nameOfBook}')|"
+    >Give Book Back</button></td>
+  </tr>
+  </tbody>
+</table>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Give Book Back</h1>
+      </div>
+      <form action="/giveBookBack" method="post">
+      <div class="modal-body">
+        <input type="hidden" id="idOrder" name="idOrder">
+        <input type="hidden" id="idBook" name="idBook">
+        <p>Please enter the corresponding book loan code in the loan slip to return the named book <span id="nameBook"></span></p>
+        <input type="text" name="bookLoanCode">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Done</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+</script>
+<script>
+  function sendInforToModal (idOrder,idBook,name){
+    document.getElementById("idOrder").value = idOrder;
+    document.getElementById("idBook").value = idBook;
+    document.getElementById("nameBook").textContent = name;
+  }
+</script>
+</body>
+</html>
