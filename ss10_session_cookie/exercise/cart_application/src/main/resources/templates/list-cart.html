@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">List Product</i></a>
+        <span th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
+    </div>
+</nav>
+<section style="background-color: #eee;">
+    <div th:each="entry: ${listCart.entrySet()}" class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+            <div class="card shadow-0 border rounded-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                <img th:src="${entry.getKey().getImagePath()}"
+                                     class="w-100"/>
+                                <div class="hover-overlay">
+                                    <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <h5 th:text="${entry.getKey().getName()}"></h5>
+                            Số lượng:
+                            <form th:action="@{/changeAmount(idChangeAmount=${entry.getKey().id})}" method="post">
+                                <button type="submit" onclick="decreaseValue(this)">-</button>
+                                <input th:id="'amount-'+${entry.getKey().id}" th:max="${entry.getKey().amount}" min="0"
+                                       readonly style="border: none;width: 7%" type="number"
+                                       th:value="${entry.getValue()}" name="amount">
+                                <button type="submit" onclick="increaseValue(this)">+</button>
+                            </form>
+                            <div class="d-flex flex-row">
+                                <div class="text-danger mb-1 me-2">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="mt-1 mb-0 text-muted small">
+                                <span>Hàng nhập khẩu</span>
+                                <span class="text-primary"> • </span>
+                                <span>Sang trọng</span>
+                                <span class="text-primary"> • </span>
+                                <span>Đơn giản<br/></span>
+                            </div>
+                            <div class="mb-2 text-muted small">
+                                <span>Giá hợp lý</span>
+                                <span class="text-primary"> • </span>
+                                <span>Nam hoặc nữ</span>
+                                <span class="text-primary"> • </span>
+                                <span>Vận chuyển nhanh<br/></span>
+                            </div>
+                            <h4 class="mb-1 me-1" th:text="'Đơn giá : $'+${entry.getKey().getPrice()}"></h4>
+                            <a th:href="@{/deleteProduct(id=${entry.getKey().getId()})}">Delete</a>
+                        </div>
+                        <a th:href="@{/pay(id=${entry.getKey().id})}">Thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous">
+</script>
+<script>
+    function increaseValue(button) {
+        let input = button.previousElementSibling;
+        let currentValue = parseFloat(input.value);
+        let maxValue = parseFloat(input.getAttribute("max"));
+        if (currentValue < maxValue) {
+            input.value = (currentValue + 1).toString();
+        }
+    }
+
+    function decreaseValue(button) {
+        let input = button.nextElementSibling;
+        let currentValue = parseFloat(input.value);
+        let minValue = parseFloat(input.getAttribute("min"));
+        if (currentValue > minValue) {
+            input.value = (currentValue - 1).toString();
+        }
+    }
+</script>
+</body>
+</html>

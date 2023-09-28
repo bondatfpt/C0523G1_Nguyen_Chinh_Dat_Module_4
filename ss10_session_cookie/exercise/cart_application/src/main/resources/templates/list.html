@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/showCart"><i style="width: 100%" class='bx bx-cart-add'></i></a>
+    </div>
+</nav>
+<section  style="background-color: #eee;">
+    <div th:each="product: ${list}" class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+            <div class="card shadow-0 border rounded-3">
+                <div class="card-body">
+                    <div style="margin-left: 0; margin-right: 0" class="row">
+                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                <img th:src="${product.imagePath}"
+                                     class="w-100"/>
+                                <div class="hover-overlay">
+                                    <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <h5 th:text="${product.name}"></h5>
+                            <span th:text="'Số lượng: ' + ${product.amount} + ' cái'" ></span>
+                            <div class="d-flex flex-row">
+                                <div class="text-danger mb-1 me-2">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="mt-1 mb-0 text-muted small">
+                                <span>Hàng nhập khẩu</span>
+                                <span class="text-primary"> • </span>
+                                <span>Sang trọng</span>
+                                <span class="text-primary"> • </span>
+                                <span>Đơn giản<br/></span>
+                            </div>
+                            <div class="mb-2 text-muted small">
+                                <span>Giá hợp lý</span>
+                                <span class="text-primary"> • </span>
+                                <span>Nam hoặc nữ</span>
+                                <span class="text-primary"> • </span>
+                                <span>Vận chuyển nhanh<br/></span>
+                            </div>
+                            <p class="text-truncate mb-4 mb-md-0" th:text="${product.description}"></p>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                            <div class="d-flex flex-row align-items-center mb-1">
+                                <h4 class="mb-1 me-1" th:text="'$'+${product.price}"></h4>
+                            </div>
+                            <h6 class="text-success">Miễn phí ship</h6>
+                            <div class="d-flex flex-column mt-4">
+                                <a class="btn btn-primary btn-sm" th:href="@{/showFormDetails(id=${product.id})}" type="button">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>
