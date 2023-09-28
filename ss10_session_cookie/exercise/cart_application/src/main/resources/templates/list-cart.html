@@ -11,6 +11,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}">Danh sách sản phẩm</i></a>
+        <span th:if="${!listCart.isEmpty()}" th:text="'Số sản phẩm: ' + ${quantity}"></span>
         <span th:if="${!listCart.isEmpty()}" th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
         <a th:if="${!listCart.isEmpty()}" href="/pay">Thanh toán</a>
     </div>

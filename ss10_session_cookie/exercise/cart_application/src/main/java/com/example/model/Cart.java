@@ -33,9 +33,6 @@ public class Cart {
         return quantity;
     }
 
-    public Integer countProduct (){
-        return productsMap.size();
-    }
 
     public double countTotalPayment (){
         double totalPayment = 0;

@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -21,6 +19,8 @@ public class CartController {
         model.addAttribute("listCart",productIntegerMap);
         double totalPayment = cart.countTotalPayment();
         model.addAttribute("totalPayment",totalPayment);
+        int quantity = cart.countQuantityProduct();
+        model.addAttribute("quantity",quantity);
         return "list-cart";
     }
 
@@ -48,5 +48,4 @@ public class CartController {
         }
         return showCart(cart,model);
     }
-
 }

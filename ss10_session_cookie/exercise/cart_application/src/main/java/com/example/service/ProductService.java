@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
     @Autowired
     private IProductRepository iProductRepository;
+
     @Override
     public List<Product> findAll() {
         return iProductRepository.findAll();
@@ -23,10 +24,10 @@ public class ProductService implements IProductService{
 
     @Override
     public boolean save(Product product) {
-        try{
+        try {
             iProductRepository.save(product);
-        }catch (Exception e){
-        return false;
+        } catch (Exception e) {
+            return false;
         }
         return true;
     }
