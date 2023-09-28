@@ -20,4 +20,14 @@ public class ProductService implements IProductService{
     public Product findById(int id) {
         return iProductRepository.findById(id).get();
     }
+
+    @Override
+    public boolean save(Product product) {
+        try{
+            iProductRepository.save(product);
+        }catch (Exception e){
+        return false;
+        }
+        return true;
+    }
 }

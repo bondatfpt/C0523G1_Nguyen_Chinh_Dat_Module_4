@@ -45,7 +45,13 @@ public class ProductController {
 
     @GetMapping("/pay")
     public String pay (Model model, @SessionAttribute(value = "cart",required = false)Cart cart){
-
+        Map<Product,Integer> productIntegerMap = cart.getAll();
+        for (Product product:productIntegerMap.keySet()) {
+          Product product1 = iProductService.findById(product.getId());
+          product1.setAmount(product1.getAmount() - productIntegerMap.get(product));
+          iProductService.save(product1);
+        }
+        productIntegerMap.clear();
         return "redirect:/";
     }
 }

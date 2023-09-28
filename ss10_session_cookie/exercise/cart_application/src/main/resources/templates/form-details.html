@@ -7,6 +7,11 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">List Product</i></a>
+    </div>
+</nav>
 <section style="background-color: #eee;">
     <div class="row justify-content-center mb-3">
         <form th:object="${productDetails}" action="">
@@ -56,11 +61,12 @@
                                     $<input readonly style="border: none" class="mb-1 me-1" th:field="*{price}"></input>
                                 </div>
                                 <h6 class="text-success">Miễn phí ship</h6>
-                                <div class="d-flex flex-column mt-4">
+                                <div th:if="${productDetails.amount > 0}" class="d-flex flex-column mt-4">
                                     <a th:href="@{/addToCart(id=${productDetails.id})}" class="btn btn-outline-primary btn-sm mt-2" type="button">
                                         Thêm vào giỏ hàng
                                     </a>
                                 </div>
+                                <h4 style="color:red;" th:if="${productDetails.amount<= 0}">Hàng đang trên đường về,xin vui lòng chờ vài ngày</h4>
                             </div>
                         </div>
                     </div>
