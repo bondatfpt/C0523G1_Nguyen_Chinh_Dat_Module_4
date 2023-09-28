@@ -10,8 +10,9 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">List Product</i></a>
-        <span th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
+        <a class="navbar-brand" th:href="@{/}">Danh sách sản phẩm</i></a>
+        <span th:if="${!listCart.isEmpty()}" th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
+        <a th:if="${!listCart.isEmpty()}" href="/pay">Thanh toán</a>
     </div>
 </nav>
 <section style="background-color: #eee;">
@@ -65,7 +66,6 @@
                             <h4 class="mb-1 me-1" th:text="'Đơn giá : $'+${entry.getKey().getPrice()}"></h4>
                             <a th:href="@{/deleteProduct(id=${entry.getKey().getId()})}">Delete</a>
                         </div>
-                        <a th:href="@{/pay(id=${entry.getKey().id})}">Thanh toán</a>
                     </div>
                 </div>
             </div>
