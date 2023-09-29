@@ -18,11 +18,14 @@ public class CartController {
     @Autowired
     private IProductService iProductService;
 
-    @GetMapping("showCart")
+    @GetMapping("/showCart")
     public String showCart(@SessionAttribute(value = "cart", required = false)
                            Cart cart, Model model) {
         Map<Product, Integer> productIntegerMap = cart.getAll();
         model.addAttribute("listCart", productIntegerMap);
+        if (productIntegerMap.isEmpty()) {
+            model.addAttribute("message", "Giỏ hàng hiện đang trống !");
+        }
         double totalPayment = cart.countTotalPayment();
         model.addAttribute("totalPayment", totalPayment);
         int quantity = cart.countQuantityProduct();
@@ -40,7 +43,7 @@ public class CartController {
     @PostMapping("/changeAmount")
     public String changeAmount(@SessionAttribute(value = "cart", required = false) Cart cart, Model model,
                                @RequestParam Integer idChangeAmount, @RequestParam Integer amount) {
-        cart.changeAmount(idChangeAmount,amount);
+        cart.changeAmount(idChangeAmount, amount);
         return showCart(cart, model);
     }
 

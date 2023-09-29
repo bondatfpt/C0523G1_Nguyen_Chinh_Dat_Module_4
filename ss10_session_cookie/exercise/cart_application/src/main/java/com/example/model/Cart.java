@@ -42,8 +42,8 @@ public class Cart {
 
     public void changeAmount(int idProduct, Integer amount) {
         for (Product product : productsMap.keySet()) {
-            if(product.getId() == idProduct)
-            productsMap.replace(product, amount);
+            if (product.getId() == idProduct)
+                productsMap.replace(product, amount);
         }
     }
 
@@ -64,4 +64,5 @@ public class Cart {
         }
         return totalPayment;
     }
+
 }
