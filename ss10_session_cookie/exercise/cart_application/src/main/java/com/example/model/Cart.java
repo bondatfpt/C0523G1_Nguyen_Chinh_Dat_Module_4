@@ -2,10 +2,13 @@ package com.example.model;
 
 import com.example.service.IProductService;
 import com.example.service.ProductService;
+
 import java.util.HashMap;
 import java.util.Map;
+
 public class Cart {
     private Map<Product, Integer> productsMap = new HashMap<>();
+
     public Cart() {
     }
 
@@ -37,16 +40,14 @@ public class Cart {
         }
     }
 
-    public void changeAmount(Integer idProduct, Integer amount) {
+    public void changeAmount(int idProduct, Integer amount) {
         for (Product product : productsMap.keySet()) {
-            if (product.getId() != idProduct) {
-                break;
-            } else {
-                productsMap.replace(product, amount);
-                break;
-            }
+            if(product.getId() == idProduct)
+            productsMap.replace(product, amount);
+            break;
         }
     }
+
 
     public Integer countQuantityProduct() {
         Integer quantity = 0;
