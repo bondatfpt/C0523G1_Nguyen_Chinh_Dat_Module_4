@@ -16,7 +16,7 @@
         <a th:if="${!listCart.isEmpty()} and ${quantity > 0}" href="/pay">Thanh toán</a>
     </div>
 </nav>
-<section style="background-color: #eee;">
+<section  style="background-color: #eee;">
     <div th:each="entry: ${listCart.entrySet()}" class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10">
             <div class="card shadow-0 border rounded-3">
