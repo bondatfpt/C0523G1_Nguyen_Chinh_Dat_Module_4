@@ -64,4 +64,8 @@ public class Cart {
         }
         return totalPayment;
     }
+
+    public void pay (){
+
+    }
 }

@@ -45,7 +45,7 @@ public class CartController {
     }
 
     @GetMapping("/pay")
-    public String pay(Model model, @SessionAttribute(value = "cart", required = false) Cart cart) {
+    public String pay(@SessionAttribute(value = "cart", required = false) Cart cart) {
         Map<Product, Integer> productIntegerMap = cart.getAll();
         for (Product product : productIntegerMap.keySet()) {
             Product product1 = iProductService.findById(product.getId());
