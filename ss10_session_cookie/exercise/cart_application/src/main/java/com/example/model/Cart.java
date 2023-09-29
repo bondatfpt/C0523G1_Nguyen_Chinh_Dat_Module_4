@@ -13,30 +13,53 @@ public class Cart {
         this.productsMap = productsMap;
     }
 
-    public Map<Product,Integer> getAll (){
+    public Map<Product, Integer> getAll() {
         return productsMap;
     }
 
-    public void addProduct (Product product){
-        if(productsMap.containsKey(product)){
+    public void addProduct(Product product) {
+        if (productsMap.containsKey(product)) {
             Integer amount = productsMap.get(product);
-            productsMap.replace(product,amount + 1);
-        }else {
-            productsMap.put(product,1);
+            productsMap.replace(product, amount + 1);
+        } else {
+            productsMap.put(product, 1);
         }
     }
-    public Integer countQuantityProduct (){
+
+    public void deleteProduct(Integer id) {
+        for (Product product : productsMap.keySet()) {
+            if (product.getId() != id) {
+                break;
+            } else {
+                productsMap.remove(product, productsMap.get(product));
+                break;
+            }
+        }
+    }
+
+    public void changeAmount(Integer idProduct, Integer amount) {
+        for (Product product : productsMap.keySet()) {
+            if (product.getId() != idProduct) {
+                break;
+            } else {
+                productsMap.replace(product, amount);
+                break;
+            }
+        }
+    }
+
+    public Integer countQuantityProduct() {
         Integer quantity = 0;
-        for (Map.Entry<Product,Integer> entry:productsMap.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : productsMap.entrySet()) {
             quantity += entry.getValue();
         }
         return quantity;
     }
 
 
-    public double countTotalPayment (){
+    public double countTotalPayment() {
         double totalPayment = 0;
-        for (Map.Entry<Product,Integer> entry: productsMap.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : productsMap.entrySet()) {
             totalPayment += entry.getValue() * (entry.getKey().getPrice());
         }
         return totalPayment;
