@@ -44,7 +44,6 @@ public class Cart {
         for (Product product : productsMap.keySet()) {
             if(product.getId() == idProduct)
             productsMap.replace(product, amount);
-            break;
         }
     }
 
