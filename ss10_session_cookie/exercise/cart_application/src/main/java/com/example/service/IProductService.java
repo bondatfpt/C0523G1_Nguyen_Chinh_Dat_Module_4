@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface IProductService {
     List<Product> findAll ();
-    Product findById (int id);
+    Product findById (Integer id);
     boolean save (Product product);
     void pay(Map<Product,Integer>productsMap);
 }

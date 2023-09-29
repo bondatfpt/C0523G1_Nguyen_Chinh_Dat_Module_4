@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 public class Cart {
     private Map<Product, Integer> productsMap = new HashMap<>();
-    private IProductService iProductService = new ProductService();
-
     public Cart() {
     }
 

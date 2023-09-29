@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @SessionAttributes("cart")
@@ -30,14 +28,14 @@ public class ProductController {
     }
 
     @GetMapping("/showFormDetails")
-    public String showFormDetails(@RequestParam int id, Model model) {
+    public String showFormDetails(@RequestParam Integer id, Model model) {
         Product product = iProductService.findById(id);
         model.addAttribute("productDetails", product);
         return "form-details";
     }
 
     @GetMapping("/addToCart")
-    public String addToCart (@RequestParam int id, @SessionAttribute(value = "cart", required = false) Cart cart){
+    public String addToCart (@RequestParam Integer id, @SessionAttribute(value = "cart", required = false) Cart cart){
         Product product = iProductService.findById(id);
         cart.addProduct(product);
         return "redirect:/";

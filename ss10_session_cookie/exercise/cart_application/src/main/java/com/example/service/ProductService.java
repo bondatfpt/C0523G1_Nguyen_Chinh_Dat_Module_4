@@ -4,7 +4,6 @@ import com.example.model.Product;
 import com.example.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(Integer id) {
         return iProductRepository.findById(id).get();
     }
 
