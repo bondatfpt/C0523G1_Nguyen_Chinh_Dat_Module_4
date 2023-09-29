@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService implements IProductService {
     @Autowired
     private IProductRepository iProductRepository;
+
 
     @Override
     public List<Product> findAll() {
@@ -30,5 +32,17 @@ public class ProductService implements IProductService {
             return false;
         }
         return true;
+    }
+
+    public void pay(Map<Product, Integer> productsMap) {
+        if (productsMap.isEmpty()) {
+            throw new RuntimeException("Giỏ hàng trống !");
+        }
+        for (Product productPurchased : productsMap.keySet()) {
+            Product productInventory = findById(productPurchased.getId());
+            productInventory.setAmount(productInventory.getAmount() - productsMap.get(productInventory));
+            save(productInventory);
+        }
+        productsMap.clear();
     }
 }

@@ -1,10 +1,12 @@
 package com.example.model;
 
+import com.example.service.IProductService;
+import com.example.service.ProductService;
 import java.util.HashMap;
 import java.util.Map;
-
 public class Cart {
     private Map<Product, Integer> productsMap = new HashMap<>();
+    private IProductService iProductService = new ProductService();
 
     public Cart() {
     }
@@ -63,9 +65,5 @@ public class Cart {
             totalPayment += entry.getValue() * (entry.getKey().getPrice());
         }
         return totalPayment;
-    }
-
-    public void pay (){
-
     }
 }
