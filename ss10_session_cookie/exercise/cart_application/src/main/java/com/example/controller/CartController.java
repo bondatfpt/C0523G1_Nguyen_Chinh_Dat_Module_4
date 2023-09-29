@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.model.Cart;
 import com.example.model.Product;
+import com.example.service.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import java.util.Map;
 
 @Controller
 public class CartController {
+    @Autowired
+    private IProductService iProductService;
     @GetMapping("showCart")
     public String showCart (@SessionAttribute(value = "cart", required = false)
                                 Cart cart, Model model){
@@ -47,5 +51,17 @@ public class CartController {
             }
         }
         return showCart(cart,model);
+    }
+
+    @GetMapping("/pay")
+    public String pay (Model model, @SessionAttribute(value = "cart",required = false)Cart cart){
+        Map<Product,Integer> productIntegerMap = cart.getAll();
+        for (Product product:productIntegerMap.keySet()) {
+            Product product1 = iProductService.findById(product.getId());
+            product1.setAmount(product1.getAmount() - productIntegerMap.get(product));
+            iProductService.save(product1);
+        }
+        productIntegerMap.clear();
+        return "redirect:/";
     }
 }
