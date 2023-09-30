@@ -16,6 +16,7 @@
         <a th:if="${!listCart.isEmpty()} and ${quantity > 0} " href="/carts/pay">Thanh toán</a>
     </div>
 </nav>
+<span style="color: red" th:text="${messageAmount}"></span><br>
 <section  style="background-color: #eee;">
     <div th:each="entry: ${listCart.entrySet()}" class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10">
@@ -34,7 +35,6 @@
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <h5 th:text="${entry.getKey().getName()}"></h5>
-                            <span style="color: red" th:text="${messageAmount}"></span><br>
                             Nhập số lượng:
                                 <input min="0" th:value="${entry.getValue()}" th:max="${entry.getKey().amount}" type="number" name="amount" th:attr="onchange=|changeAmount(${entry.getKey().getId()},this.value)|">
 
