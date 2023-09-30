@@ -5,6 +5,8 @@ import com.example.model.Product;
 import com.example.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +40,14 @@ public class ProductService implements IProductService {
     public Integer countAmountProductInventory() {
         return iProductRepository.countAmountProductInventory();
     }
-
+    @Transactional
     public void pay(Map<Product, Integer> productsMap) {
         Cart cart = new Cart();
         if (cart.countProductQuantity() > countAmountProductInventory()){
             throw  new RuntimeException("Quá số lượng hàng tồn kho!");
+        }
+        if (cart.countProductQuantity() <= 0){
+            throw new RuntimeException("Số lượng không hợp lệ!");
         }
         if (productsMap.isEmpty()) {
             throw new RuntimeException("Giỏ hàng trống !");
