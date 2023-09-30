@@ -1,11 +1,6 @@
 package com.example.model;
-
-import com.example.service.IProductService;
-import com.example.service.ProductService;
-
 import java.util.HashMap;
 import java.util.Map;
-
 public class Cart {
     private Map<Product, Integer> productsMap = new HashMap<>();
 
@@ -49,14 +44,13 @@ public class Cart {
     }
 
 
-    public Integer countQuantityProduct() {
+    public Integer countQuantityProduct(Map<Product,Integer> integerMap) {
         Integer quantity = 0;
-        for (Map.Entry<Product, Integer> entry : productsMap.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : integerMap.entrySet()) {
             quantity += entry.getValue();
         }
         return quantity;
     }
-
 
     public double countTotalPayment() {
         double totalPayment = 0;
@@ -65,13 +59,4 @@ public class Cart {
         }
         return totalPayment;
     }
-
-    public Integer countProductQuantity() {
-        Integer productQuantity = 0;
-        for (Map.Entry<Product, Integer> entry : productsMap.entrySet()) {
-            productQuantity += entry.getValue();
-        }
-        return productQuantity;
-    }
-
 }

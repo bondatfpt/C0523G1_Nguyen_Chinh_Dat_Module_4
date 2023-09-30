@@ -27,7 +27,7 @@ public class CartController {
         }
         double totalPayment = cart.countTotalPayment();
         model.addAttribute("totalPayment", totalPayment);
-        int quantity = cart.countQuantityProduct();
+        int quantity = cart.countQuantityProduct(productIntegerMap);
         model.addAttribute("quantity", quantity);
         return "list-cart";
     }

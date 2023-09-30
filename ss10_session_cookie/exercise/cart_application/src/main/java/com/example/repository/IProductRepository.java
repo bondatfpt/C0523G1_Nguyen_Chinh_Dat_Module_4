@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface IProductRepository extends JpaRepository<Product,Integer>{
-    @Query (value = "select SUM(amount) from products",nativeQuery = true)
+    @Query (value = "select SUM(amount) from product",nativeQuery = true)
     Integer countAmountProductInventory ();
 }
