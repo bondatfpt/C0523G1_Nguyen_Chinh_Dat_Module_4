@@ -6,19 +6,18 @@ import com.example.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @Controller
+@RequestMapping("/carts")
 public class CartController {
     @Autowired
     private IProductService iProductService;
 
-    @GetMapping("/showCart")
+
+    @GetMapping("")
     public String showCart(@SessionAttribute(value = "cart", required = false)
                            Cart cart, Model model) {
         Map<Product, Integer> productIntegerMap = cart.getAll();
@@ -33,8 +32,8 @@ public class CartController {
         return "list-cart";
     }
 
-    @GetMapping("/deleteProduct")
-    public String deleteProduct(@RequestParam Integer id, Model model, @SessionAttribute
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable Integer id, Model model, @SessionAttribute
             (value = "cart", required = false) Cart cart) {
         cart.deleteProduct(id);
         return showCart(cart, model);
@@ -51,6 +50,6 @@ public class CartController {
     public String pay(@SessionAttribute(value = "cart", required = false) Cart cart) {
         Map<Product, Integer> productIntegerMap = cart.getAll();
         iProductService.pay(productIntegerMap);
-        return "redirect:/";
+        return "redirect:/products";
     }
 }

@@ -11,7 +11,7 @@
 <body>
 <nav th:if="${!cart.getAll().isEmpty()}" class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a th:href="@{/showCart}" class="navbar-brand">Giỏ hàng</a>
+        <a th:href="@{/carts}" class="navbar-brand">Giỏ hàng</a>
     </div>
 </nav>
 <section  style="background-color: #eee;">
@@ -63,7 +63,7 @@
                             </div>
                             <h6 class="text-success">Miễn phí ship</h6>
                             <div class="d-flex flex-column mt-4">
-                                <a class="btn btn-primary btn-sm" th:href="@{/showFormDetails(id=${product.id})}" type="button">Xem chi tiết</a>
+                                <a class="btn btn-primary btn-sm" th:href="@{/products/details/{id}(id=${product.id})}" type="button">Xem chi tiết</a>
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/products")
 @SessionAttributes("cart")
 public class ProductController {
     @ModelAttribute("cart")
@@ -27,18 +28,18 @@ public class ProductController {
         return "list";
     }
 
-    @GetMapping("/showFormDetails")
-    public String showFormDetails(@RequestParam Integer id, Model model) {
+    @GetMapping("/details/{id}")
+    public String showFormDetails(@PathVariable Integer id, Model model) {
         Product product = iProductService.findById(id);
         model.addAttribute("productDetails", product);
         return "form-details";
     }
 
-    @GetMapping("/addToCart")
-    public String addToCart (@RequestParam Integer id, @SessionAttribute(value = "cart", required = false) Cart cart){
+    @GetMapping("/addToCart/{id}")
+    public String addToCart (@PathVariable Integer id, @SessionAttribute(value = "cart", required = false) Cart cart){
         Product product = iProductService.findById(id);
         cart.addProduct(product);
-        return "redirect:/";
+        return "redirect:/carts";
     }
 
 }

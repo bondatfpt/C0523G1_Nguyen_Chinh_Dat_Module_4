@@ -10,10 +10,10 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Danh sách sản phẩm</i></a>
+        <a class="navbar-brand" th:href="@{/products}">Danh sách sản phẩm</a>
         <span th:if="${!listCart.isEmpty()}" th:text="'Số sản phẩm: ' + ${quantity}"></span>
         <span th:if="${!listCart.isEmpty()}" th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
-        <a th:if="${!listCart.isEmpty()} and ${quantity > 0}" href="/pay">Thanh toán</a>
+        <a th:if="${!listCart.isEmpty()} and ${quantity > 0}" href="/carts/pay">Thanh toán</a>
     </div>
 </nav>
 <section  style="background-color: #eee;">
@@ -35,7 +35,8 @@
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <h5 th:text="${entry.getKey().getName()}"></h5>
                             Số lượng:
-                            <form th:action="@{/changeAmount(idChangeAmount=${entry.getKey().id})}" method="post">
+                            <form th:action="@{/carts/changeAmount}" method="post">
+                                <input type="hidden" name="idChangeAmount" th:value="${entry.getKey().id}">
                                 <button type="submit" onclick="decreaseValue(this)">-</button>
                                 <input th:id="'amount-'+${entry.getKey().id}" th:max="${entry.getKey().amount}" min="0"
                                        readonly style="border: none;width: 7%" type="number"
@@ -65,7 +66,7 @@
                                 <span>Vận chuyển nhanh<br/></span>
                             </div>
                             <h4 class="mb-1 me-1" th:text="'Đơn giá : $'+${entry.getKey().getPrice()}"></h4>
-                            <a th:href="@{/deleteProduct(id=${entry.getKey().getId()})}">Xóa sản phẩm</a>
+                            <a th:href="@{/carts/deleteProduct/{id}(id=${entry.getKey().getId()})}">Xóa sản phẩm</a>
                         </div>
                     </div>
                 </div>
