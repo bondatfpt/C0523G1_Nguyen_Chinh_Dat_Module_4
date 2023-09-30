@@ -42,7 +42,7 @@ public class Cart {
 
     public void changeAmount(int idProduct, Integer amount) {
         for (Product product : productsMap.keySet()) {
-            if (product.getId() == idProduct && product.getAmount() >= amount) {
+            if (product.getId() == idProduct && product.getAmount() >= amount && amount >= 0) {
                 productsMap.replace(product, amount);
             }
         }
