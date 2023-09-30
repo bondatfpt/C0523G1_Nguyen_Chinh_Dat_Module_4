@@ -40,10 +40,6 @@ public class ProductService implements IProductService {
 
     public void pay(Map<Product, Integer> productsMap) {
         Cart cart = new Cart();
-        int count = countAmountProductInventory();
-        System.out.println(count);
-        int countProductInCart = cart.countQuantityProduct(productsMap);
-        System.out.println(countProductInCart);
         if (cart.countQuantityProduct(productsMap) > countAmountProductInventory()){
             throw  new RuntimeException("Quá số lượng hàng tồn kho!");
         }
