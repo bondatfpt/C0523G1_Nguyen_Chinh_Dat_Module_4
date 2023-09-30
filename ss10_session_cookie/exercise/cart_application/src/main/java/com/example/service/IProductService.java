@@ -10,4 +10,5 @@ public interface IProductService {
     Product findById (Integer id);
     boolean save (Product product);
     void pay(Map<Product,Integer>productsMap);
+    Integer countAmountProductInventory ();
 }

@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.model.Cart;
 import com.example.model.Product;
 import com.example.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,16 @@ public class ProductService implements IProductService {
         return true;
     }
 
+    @Override
+    public Integer countAmountProductInventory() {
+        return iProductRepository.countAmountProductInventory();
+    }
+
     public void pay(Map<Product, Integer> productsMap) {
+        Cart cart = new Cart();
+        if (cart.countProductQuantity() > countAmountProductInventory()){
+            throw  new RuntimeException("Quá số lượng hàng tồn kho!");
+        }
         if (productsMap.isEmpty()) {
             throw new RuntimeException("Giỏ hàng trống !");
         }

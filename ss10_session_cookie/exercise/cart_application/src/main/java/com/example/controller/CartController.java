@@ -39,10 +39,23 @@ public class CartController {
         return showCart(cart, model);
     }
 
-    @PostMapping("/changeAmount")
+    @GetMapping("/changeAmount/{idProduct}/{amount}")
     public String changeAmount(@SessionAttribute(value = "cart", required = false) Cart cart, Model model,
-                               @RequestParam Integer idChangeAmount, @RequestParam Integer amount) {
-        cart.changeAmount(idChangeAmount, amount);
+                               @PathVariable Integer idProduct, @PathVariable Integer amount) {
+        Product product = iProductService.findById(idProduct);
+        boolean flag = true;
+        model.addAttribute("flag",flag);
+        if (product.getAmount() < amount) {
+            flag = false;
+            model.addAttribute("flag",flag);
+            model.addAttribute("messageAmount", "Quá số lượng hàng hiện có !");
+        } else if (amount < 0) {
+            flag = false;
+            model.addAttribute("flag",flag);
+            model.addAttribute("messageAmount", "Giá trị không hợp lệ");
+        } else {
+            cart.changeAmount(idProduct, amount);
+        }
         return showCart(cart, model);
     }
 

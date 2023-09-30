@@ -42,8 +42,11 @@ public class Cart {
 
     public void changeAmount(int idProduct, Integer amount) {
         for (Product product : productsMap.keySet()) {
-            if (product.getId() == idProduct)
+            if (product.getId() == idProduct && product.getAmount() >= amount) {
                 productsMap.replace(product, amount);
+            }else {
+                break;
+            }
         }
     }
 
@@ -63,6 +66,14 @@ public class Cart {
             totalPayment += entry.getValue() * (entry.getKey().getPrice());
         }
         return totalPayment;
+    }
+
+    public Integer countProductQuantity() {
+        Integer productQuantity = 0;
+        for (Map.Entry<Product, Integer> entry : productsMap.entrySet()) {
+            productQuantity += entry.getValue();
+        }
+        return productQuantity;
     }
 
 }

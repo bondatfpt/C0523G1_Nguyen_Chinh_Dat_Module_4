@@ -12,8 +12,8 @@
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/products}">Danh sách sản phẩm</a>
         <span th:if="${!listCart.isEmpty()}" th:text="'Số sản phẩm: ' + ${quantity}"></span>
-        <span th:if="${!listCart.isEmpty()}" th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
-        <a th:if="${!listCart.isEmpty()} and ${quantity > 0}" href="/carts/pay">Thanh toán</a>
+        <span th:if="${!listCart.isEmpty()} and ${flag}" th:text="'Tổng tiền: '+ ${totalPayment} + ' $'"></span>
+        <a th:if="${!listCart.isEmpty()} and ${quantity > 0} and ${flag}" href="/carts/pay">Thanh toán</a>
     </div>
 </nav>
 <section  style="background-color: #eee;">
@@ -34,15 +34,10 @@
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <h5 th:text="${entry.getKey().getName()}"></h5>
-                            Số lượng:
-                            <form th:action="@{/carts/changeAmount}" method="post">
-                                <input type="hidden" name="idChangeAmount" th:value="${entry.getKey().id}">
-                                <button type="submit" onclick="decreaseValue(this)">-</button>
-                                <input th:id="'amount-'+${entry.getKey().id}" th:max="${entry.getKey().amount}" min="0"
-                                       readonly style="border: none;width: 7%" type="number"
-                                       th:value="${entry.getValue()}" name="amount">
-                                <button type="submit" onclick="increaseValue(this)">+</button>
-                            </form>
+                            <span style="color: red" th:text="${messageAmount}"></span><br>
+                            Nhập số lượng:
+                                <input min="0" th:value="${entry.getValue()}" th:max="${entry.getKey().amount}" type="number" name="amount" th:attr="onchange=|changeAmount(${entry.getKey().getId()},this.value)|">
+
                             <div class="d-flex flex-row">
                                 <div class="text-danger mb-1 me-2">
                                     <i class="fa fa-star"></i>
@@ -95,6 +90,9 @@
         if (currentValue > minValue) {
             input.value = (currentValue - 1).toString();
         }
+    }
+    function changeAmount (idProduct, amount){
+        window.location.href = "/carts/changeAmount/" + idProduct + "/" + amount;
     }
 </script>
 </body>
