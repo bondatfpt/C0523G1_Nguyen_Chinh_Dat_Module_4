@@ -18,7 +18,7 @@ public class CartController {
 
 
     @GetMapping("")
-    public String showCart(@SessionAttribute(value = "cart", required = false)
+    public String showCart(@SessionAttribute(value = "cart")
                            CartDto cartDto, Model model) {
         Map<Product, Integer> productIntegerMap = cartDto.getAll();
         model.addAttribute("listCart", productIntegerMap);
@@ -34,13 +34,13 @@ public class CartController {
 
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable Integer id, Model model, @SessionAttribute
-            (value = "cart", required = false) CartDto cartDto) {
+            (value = "cart") CartDto cartDto) {
         cartDto.deleteProduct(id);
         return showCart(cartDto, model);
     }
 
     @GetMapping("/changeAmount/{idProduct}/{amount}")
-    public String changeAmount(@SessionAttribute(value = "cart", required = false) CartDto cartDto, Model model,
+    public String changeAmount(@SessionAttribute(value = "cart") CartDto cartDto, Model model,
                                @PathVariable Integer idProduct, @PathVariable Integer amount) {
         Product product = iProductService.findById(idProduct);
         if (product.getAmount() < amount) {
@@ -54,7 +54,7 @@ public class CartController {
     }
 
     @GetMapping("/pay")
-    public String pay(@SessionAttribute(value = "cart", required = false) CartDto cartDto) {
+    public String pay(@SessionAttribute(value = "cart") CartDto cartDto) {
         Map<Product, Integer> productIntegerMap = cartDto.getAll();
         iProductService.pay(productIntegerMap);
         return "redirect:/products";
