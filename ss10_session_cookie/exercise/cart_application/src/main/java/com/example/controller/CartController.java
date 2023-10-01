@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.model.Cart;
+import com.example.dto.CartDto;
 import com.example.model.Product;
 import com.example.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +19,28 @@ public class CartController {
 
     @GetMapping("")
     public String showCart(@SessionAttribute(value = "cart", required = false)
-                           Cart cart, Model model) {
-        Map<Product, Integer> productIntegerMap = cart.getAll();
+                           CartDto cartDto, Model model) {
+        Map<Product, Integer> productIntegerMap = cartDto.getAll();
         model.addAttribute("listCart", productIntegerMap);
         if (productIntegerMap.isEmpty()) {
             model.addAttribute("message", "Giỏ hàng hiện đang trống !");
         }
-        double totalPayment = cart.countTotalPayment();
+        double totalPayment = cartDto.countTotalPayment();
         model.addAttribute("totalPayment", totalPayment);
-        int quantity = cart.countQuantityProduct(productIntegerMap);
+        int quantity = cartDto.countQuantityProduct(productIntegerMap);
         model.addAttribute("quantity", quantity);
         return "list-cart";
     }
 
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable Integer id, Model model, @SessionAttribute
-            (value = "cart", required = false) Cart cart) {
-        cart.deleteProduct(id);
-        return showCart(cart, model);
+            (value = "cart", required = false) CartDto cartDto) {
+        cartDto.deleteProduct(id);
+        return showCart(cartDto, model);
     }
 
     @GetMapping("/changeAmount/{idProduct}/{amount}")
-    public String changeAmount(@SessionAttribute(value = "cart", required = false) Cart cart, Model model,
+    public String changeAmount(@SessionAttribute(value = "cart", required = false) CartDto cartDto, Model model,
                                @PathVariable Integer idProduct, @PathVariable Integer amount) {
         Product product = iProductService.findById(idProduct);
         if (product.getAmount() < amount) {
@@ -48,14 +48,14 @@ public class CartController {
         } else if (amount < 0) {
             model.addAttribute("messageAmount", "Giá trị không hợp lệ");
         } else {
-            cart.changeAmount(idProduct, amount);
+            cartDto.changeAmount(idProduct, amount);
         }
-        return showCart(cart, model);
+        return showCart(cartDto, model);
     }
 
     @GetMapping("/pay")
-    public String pay(@SessionAttribute(value = "cart", required = false) Cart cart) {
-        Map<Product, Integer> productIntegerMap = cart.getAll();
+    public String pay(@SessionAttribute(value = "cart", required = false) CartDto cartDto) {
+        Map<Product, Integer> productIntegerMap = cartDto.getAll();
         iProductService.pay(productIntegerMap);
         return "redirect:/products";
     }

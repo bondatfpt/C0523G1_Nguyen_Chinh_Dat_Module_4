@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.model.Cart;
+import com.example.dto.CartDto;
 import com.example.model.Product;
 import com.example.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +39,11 @@ public class ProductService implements IProductService {
     }
 
     public void pay(Map<Product, Integer> productsMap) {
-        Cart cart = new Cart();
-        if (cart.countQuantityProduct(productsMap) > countAmountProductInventory()){
+        CartDto cartDto = new CartDto();
+        if (cartDto.countQuantityProduct(productsMap) > countAmountProductInventory()){
             throw  new RuntimeException("Quá số lượng hàng tồn kho!");
         }
-        if (cart.countQuantityProduct(productsMap) <= 0){
+        if (cartDto.countQuantityProduct(productsMap) <= 0){
             throw new RuntimeException("Số lượng không hợp lệ!");
         }
         if (productsMap.isEmpty()) {

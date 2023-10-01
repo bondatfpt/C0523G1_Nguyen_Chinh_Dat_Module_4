@@ -1,13 +1,17 @@
-package com.example.model;
+package com.example.dto;
+
+import com.example.model.Product;
+
 import java.util.HashMap;
 import java.util.Map;
-public class Cart {
+
+public class CartDto {
     private Map<Product, Integer> productsMap = new HashMap<>();
 
-    public Cart() {
+    public CartDto() {
     }
 
-    public Cart(Map<Product, Integer> productsMap) {
+    public CartDto(Map<Product, Integer> productsMap) {
         this.productsMap = productsMap;
     }
 
@@ -26,11 +30,11 @@ public class Cart {
 
     public void deleteProduct(Integer id) {
         for (Product product : productsMap.keySet()) {
-            if (product.getId() != id) {
-                break;
-            } else {
+            if (product.getId() == id) {
                 productsMap.remove(product, productsMap.get(product));
                 break;
+            }else {
+                throw new RuntimeException("Sản phẩm không tồn tại !");
             }
         }
     }
@@ -44,7 +48,7 @@ public class Cart {
     }
 
 
-    public Integer countQuantityProduct(Map<Product,Integer> integerMap) {
+    public Integer countQuantityProduct(Map<Product, Integer> integerMap) {
         Integer quantity = 0;
         for (Map.Entry<Product, Integer> entry : integerMap.entrySet()) {
             quantity += entry.getValue();
