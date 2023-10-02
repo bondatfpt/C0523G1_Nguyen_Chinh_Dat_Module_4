@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Category list</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/ showFormCreateCategory">Create Category</a>
+    <form action="">
+      <input required name="nameSearch" type="text" placeholder="Enter a name category">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">STT</th>
+    <th scope="col">Name</th>
+    <th scope="col">Blog</th>
+    <th scope="col">Edit</th>
+    <th scope="col">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="category, status:${categoryList}">
+    <td th:text="${status.count}"></td>
+    <td th:text="${category.name}"></td>
+    <td><a th:href="@{/showBlogByCategoryId(categoryId=${category.id})}">See blog</a></td>
+    <td><a th:href="@{/showFormUpdateCategory(id=${category.id})}">Update</a></td>
+    <td> <button th:attr="onclick=|sendInformationToModal ('${category.id}','${category.name}')|" type="button" data-bs-toggle="modal" class="btn btn-outline-danger"
+                 data-bs-target="#exampleModal" >Delete
+    </button> </td>
+  </tr>
+  </tbody>
+</table>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="/deleteCategory" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Category</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="idDelete" name="idDelete">
+          <span style="color:red;">Are you sure to delete the category have name: </span><span style="color: red" id="nameDelete"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+</script>
+<script>
+  function sendInformationToModal (id, name){
+    document.getElementById("idDelete").value = id;
+    document.getElementById("nameDelete").textContent = name;
+  }
+</script>
+</body>
+</html>
