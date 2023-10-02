@@ -64,7 +64,7 @@
             success: function (data){
                 for (let i = 0; i <data.content.length; i++) {
                     content += `<tr>
-                                 <td >${i + 1}</td>
+                                 <td >${(page - 1) * 2 +i + 1}</td>
                                  <td >${data.content[i].tittle}</td>
                                  <td >${data.content[i].content}</td>
                                  <td >${data.content[i].dateOfWriting}</td>
