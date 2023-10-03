@@ -13,7 +13,7 @@ import java.security.Principal;
 
 @Controller
 public class MainPageController {
-    @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcomePage(Model model) {
         System.out.println("welcome-page run");
         model.addAttribute("title", "Welcome");
@@ -26,11 +26,11 @@ public class MainPageController {
     public String adminPage(Model model, Authentication authentication) {
         System.out.println("Admin run");
 
-        User loginedUser = (User)authentication.getPrincipal();
+        User loginedUser = (User) authentication.getPrincipal();
 
         String userInfo = WebUtils.toString(loginedUser);
-        System.out.println("User obj"+loginedUser);
-        System.out.println("User info"+userInfo);
+        System.out.println("User obj" + loginedUser);
+        System.out.println("User info" + userInfo);
         model.addAttribute("userInfo", userInfo);
         return "/admin-page";
     }
@@ -49,14 +49,14 @@ public class MainPageController {
         return "/logout-successful-page";
     }
 
-   //  khi người dùng đăng nhập thành công
-    @PostMapping(value = "/userInfo")
+    //  khi người dùng đăng nhập thành công
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public String userInfo(Model model, Principal principal) {
         System.out.println("userInfo run");
 
         // Sau khi user login thanh cong se co principal
         String userName = principal.getName();
-        System.out.println("Tên là: "+userName);
+        System.out.println("Tên là: " + userName);
 
         System.out.println("User Name: " + userName);
 
