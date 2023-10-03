@@ -22,7 +22,7 @@
 </div>
 
 <h3>Enter user name and password:</h3>
-<form name='f' th:action="@{/j_spring_security_check}" method='POST'>
+<form name='f' th:action="@{/j_spring_security_check}" method=post>
     <table>
         <tr>
             <td>User:</td>
@@ -37,17 +37,10 @@
             <td><input type="checkbox" name="remember-me" /></td>
         </tr>
         <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
+            <td><button type="submit">OK</button></td>
         </tr>
     </table>
 </form>
-
-<br>
-Username/pass:
-<ul>
-    <li>dbuser1/123</li>
-    <li>dbadmin1/123</li>
-</ul>
 
 </body>
 

@@ -33,15 +33,18 @@ public class UserDetailService implements UserDetailsService {
         for (AppRole appRole : appRoles) {
             roleNames.add(appRole.getRoleName());
         }
+        System.out.println("role: "+roleNames);
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
-        if (!roleNames.isEmpty()) {
+        if (roleNames != null) {
             for (String role : roleNames) {
                 GrantedAuthority authority = new SimpleGrantedAuthority(role);
                 grantedAuthorityList.add(authority);
             }
         }
+        System.out.println("ADDED"+grantedAuthorityList);
         UserDetails userDetails = (UserDetails) new User(appUser.getUsername()
                 ,appUser.getPassword(),grantedAuthorityList);
+        System.out.println(userDetails );
         return userDetails;
     }
 }
