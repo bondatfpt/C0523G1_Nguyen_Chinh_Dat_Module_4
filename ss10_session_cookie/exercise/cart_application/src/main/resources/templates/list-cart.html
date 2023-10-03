@@ -74,23 +74,6 @@
         crossorigin="anonymous">
 </script>
 <script>
-    function increaseValue(button) {
-        let input = button.previousElementSibling;
-        let currentValue = parseFloat(input.value);
-        let maxValue = parseFloat(input.getAttribute("max"));
-        if (currentValue < maxValue) {
-            input.value = (currentValue + 1).toString();
-        }
-    }
-
-    function decreaseValue(button) {
-        let input = button.nextElementSibling;
-        let currentValue = parseFloat(input.value);
-        let minValue = parseFloat(input.getAttribute("min"));
-        if (currentValue > minValue) {
-            input.value = (currentValue - 1).toString();
-        }
-    }
     function changeAmount (idProduct, amount){
         window.location.href = "/carts/changeAmount/" + idProduct + "/" + amount;
     }
