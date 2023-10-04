@@ -14,7 +14,7 @@ public class AppUser {
     private String username;
     private String password;
     private boolean isDeleted;
-    @ManyToMany(fetch = FetchType.EAGER ,mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.EAGER  ,mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<AppRole> role;
 
     public AppUser() {

@@ -10,6 +10,8 @@ public class AppRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+
     private String roleName;
     private boolean isDeleted;
     @ManyToMany

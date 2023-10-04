@@ -30,26 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    //    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/", "/login").permitAll();
-//        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_user','ROLE_admin')");
-//        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_admin')");
-//        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-//
-//        http.authorizeRequests().and()
-//                .formLogin().loginProcessingUrl("/j_spring_security_check")
-//                .loginPage("/login").defaultSuccessUrl("/userInfo",true)
-//                .failureUrl("/login?error=true")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .and().logout().logoutUrl("/logout")
-//                .logoutSuccessUrl("/logoutSuccessful");
-//                                            http.authorizeRequests().and()
-//                .rememberMe().tokenRepository(this.persistentTokenRepository())
-//                .tokenValiditySeconds(1 * 24 * 60 * 60);
-//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
