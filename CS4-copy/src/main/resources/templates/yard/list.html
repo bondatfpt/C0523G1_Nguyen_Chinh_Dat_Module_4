@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách sân bóng</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <link rel="stylesheet" href="/public/customer/table.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(-135deg, #e1d6d6, #ffffff) center / cover;
+    }
+
+    main.table {
+      width: 82vw;
+      height: 90vh;
+      background: #fff5;
+      backdrop-filter: blur(7px);
+      box-shadow: 0 .4rem .8rem #0005;
+      border-radius: .8rem;
+      overflow: hidden;
+    }
+
+    .table__header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      /*height: 20%;*/
+      /*padding: 3rem;*/
+      background-color: #fffb;
+      padding: .8rem 1rem;
+    }
+
+    .table__body {
+      width: 95%;
+      max-width: calc(89% - .8rem);
+      margin: .8rem auto;
+      border-radius: .6rem;
+      overflow: auto;
+    }
+
+    .table__body::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+
+    .table__body::-webkit-scrollbar-thumb {
+      border-radius: .5rem;
+      background-color: #004;
+      visibility: hidden;
+    }
+
+    .table__body:hover::-webkit-scrollbar-thumb {
+      visibility: hidden;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    table, th, td {
+      border-collapse: collapse;
+      padding: 1rem;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      left: 0;
+      background-color: #d5d1defe;
+    }
+
+    .text-limit {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hi i {
+      font-size: 28px;
+    }
+
+  </style>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+<div th:if="${success}">
+  <span th:text="${success}" id="success" style="display: none"></span>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let success = document.getElementById("success").innerText;
+    console.log(success)
+    Swal.fire({
+      title: success,
+      icon: 'success',
+      timer: 1500,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+  });
+</script>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light m-0" id="ftco-navbar"
+     style="top: 0px">
+  <div class="container">
+    <a href="/" class="navbar-brand" style="color: #14a155; font-size: larger;font-weight: bold">DATSAN</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/" class="nav-link">Trang Chủ</a></li>
+        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+            class="nav-item"><a th:text="'Sân'" href="/yards/list" class="nav-link"></a></li>
+        <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}"
+            class="nav-item"><a th:text="'Khách hàng'" href="/customers/" class="nav-link"></a></li>
+        <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}"
+            class="nav-item"><a th:text="'Hợp đồng'" href="/bookings/" class="nav-link"></a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and not #authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}">
+          <a href="/yards/" th:text="'Đặt sân'" class="nav-link"></a>
+        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+            class="nav-item"><a th:text="'Nhân viên'" href="/employee/" class="nav-link"></a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and not #authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}">
+          <a href="/accountInfo" th:text="${#request.userPrincipal.name}" class="nav-link"></a>
+        </li>
+        <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'',''ROLE_USER'')')}"
+            class="nav-item"><a th:text="'Đăng xuất'" href="/logout" class="nav-link"></a></li>
+        <li th:unless="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'',''ROLE_USER'')')}"
+            class="nav-item"><a th:text="'Đăng nhập'" href="/login" class="nav-link"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div style="display: flex;justify-content: center; align-items: center;margin-top: 2rem">
+  <main class="table" style=" align-items: center">
+
+    <section class="table__header">
+      <h1 style="margin-left: 3.3rem">Danh sách sân bóng</h1>
+
+      <form action="/yards/list" method="get" style="align-items: center; margin-right: 3.3rem">
+        <input type="text" name="nameSearch" class="border border-dark" style="border-radius: 10px; "
+               placeholder="Tìm kiếm">
+        <button type="submit" style="border-radius: 10px;height: 42px" class="border border-dark">Tìm kiếm</button>
+      </form>
+    </section>
+    <section class="table__body">
+      <a href="/yards/create"><i class='bx bxs-plus-square bx-lg' style='color:#07ef53'  ></i></a>
+      <table>
+        <thead>
+        <tr>
+          <th>Tên</th>
+          <th>Địa chỉ</th>
+          <th>Mô tả</th>
+          <th>Giá</th>
+          <th>Chức năng</th>
+        </tr>
+        </thead>
+        <tbody th:each="yard :${yardPage}">
+        <td th:text="${#strings.length(yard.name) > 15 ? #strings.substring(yard.name, 0, 15) + '...' : yard.name}"
+            class="text-limit"></td>
+        <td th:text="${#strings.length(yard.address) > 10 ? #strings.substring(yard.address, 0, 10) + '...' : yard.address}"
+            class="text-limit"></td>
+        <td th:text="${#strings.length(yard.description) > 10 ? #strings.substring(yard.description, 0, 10) + '...' : yard.description}"
+            class="text-limit">
+        <td th:text="${#numbers.formatDecimal(yard.price, 0, 'COMMA', 0, 'POINT')}"></td>
+        <!--      <td th:if="${cus.identityNumber != null}"-->
+        <!--          th:text="${#strings.length(cus.identityNumber) > 10 ? #strings.substring(cus.identityNumber, 0, 10) + '...' : cus.identityNumber}"-->
+        <!--          class="text-limit"></td>-->
+        <!--            <td th:text="${#strings.length(cus.phoneNumber) > 10 ? #strings.substring(cus.phoneNumber, 0, 10) + '...' : cus.phoneNumber}" class="text-limit"></td>-->
+        <!--            <td th:text="${cus.address}" class="text-limit"></td>-->
+        <!--            <td th:text="${cus.email}" class="text-limit"></td>-->
+        <!--            <td th:text="${cus.phoneNumber}" class="text-limit"></td>-->
+        <td>
+          <a th:href="@{/yards/detail/(id=${yard.id})}">
+            <button class="btn btn-primary">
+              <i class="fa-solid fa-circle-info"></i>
+            </button>
+          </a>
+
+          <a th:href="@{/yards/update/(id=${yard.id})}">
+            <button class="btn btn-primary">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </a>
+          <button type="button" class="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  th:attr="onclick= |confirmDelete('${yard.name}','${yard.id}')|">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </tbody>
+      </table>
+    </section>
+    <div class="hi" style="display: flex;justify-content: center;align-items: center">
+      <a th:if="${yardPage.hasPrevious()}" th:href="@{/yards/list(page=${yardPage.number-1})}">
+
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <span th:text="${yardPage.number+1}"></span>/
+      <span th:text="${yardPage.totalPages}"></span>
+      <a th:if="${yardPage.hasNext()}" th:href="@{/yards/list(page=${yardPage.number+1})}">
+        <i class="fa-solid fa-arrow-right"></i>
+      </a><br></div>
+  </main>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="/yards/delete" method="post">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><b>Xoá</b></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có muốn xoá sân
+              <span id="name"></span></p>
+            <input type="text" hidden="hidden" name="id" id="id">
+            <p style="color: red"><b>Warning:</b> hoạt động này không thể hoàn tác </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quay lại</button>
+            <button type="submit" class="btn btn-primary">Xoá</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--footer start-->
+<footer class="ftco-footer bg-dark ftco-section mt-5">
+  <div class="container">
+    <div class="col-md-12" style="text-align: center;color: white; ">
+      <div class="mt-3" style="padding-top: 10px">
+        <a href="/main" style="text-decoration: none; color: white; margin-left: 30px">Giới thiệu</a>
+        <a href="/main" style="text-decoration: none; color: white; margin-right: 20px;margin-left: 20px">Điều
+          khoản sử dụng</a>
+        <a href="/main" style="text-decoration: none; color: white;">Chính sách bảo mật</a>
+      </div>
+    </div>
+    <div class="col-md-12 mt-3" style="text-align: center">
+      <i class='bx bxl-meta bx-lg' style='color:#6383ef'></i>
+      <i class='bx bxl-gmail bx-lg' style='color:#6383ef'></i>
+    </div>
+    <div class="col-md-12 text-center mt-3">
+      <p style="color: white">
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+        All rights reserved
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+    </div>
+  </div>
+</footer>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script>
+  //delete modal
+  function confirmDelete(name, id) {
+    document.getElementById("name").innerHTML = name;
+    document.getElementById("id").value = id;
+  }
+</script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/thymeleaf/3.0.12.RELEASE/thymeleaf.js"></script>-->
+<!--<script>-->
+<!--    // Hàm kiểm tra và cắt độ dài của chuỗi-->
+<!--    function truncateText(text, maxLength) {-->
+<!--        if (text.length > maxLength) {-->
+<!--            return text.substring(0, maxLength) + '...';-->
+<!--        }-->
+<!--        return text;-->
+<!--    }-->
+
+<!--    // Lấy tất cả các cột có thuộc tính th:text-->
+<!--    var columns = document.querySelectorAll('td[th\\:text]');-->
+
+<!--    // Với mỗi cột, kiểm tra và cắt độ dài nếu cần-->
+<!--    columns.forEach(function(column) {-->
+<!--        var maxLength = 10; // Số ký tự tối đa bạn muốn hiển thị-->
+<!--        var originalText = column.textContent.trim(); // Lấy nội dung ban đầu-->
+<!--        var truncatedText = truncateText(originalText, maxLength); // Kiểm tra và cắt-->
+<!--        column.textContent = truncatedText; // Gán lại nội dung-->
+<!--    });-->
+<!--</script>-->
+<script>
+  let success = document.getElementById("success").value;
+  if (success) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Thêm mới sân bóng thành công!',
+      text: 'Bạn đã thêm mới sân bóng thành công thành công',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '/yards/list';
+      }
+    });
+  }
+</script>
+</html>

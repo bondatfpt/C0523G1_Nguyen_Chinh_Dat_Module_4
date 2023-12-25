@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Sân Bóng Chi Tiết</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+</head>
+<body>
+<div class="container">
+  <h3><a th:href="@{/yards/list}"><i class='bx bx-arrow-back'></i></a></h3>
+  <div th:object="${yard}">
+    <div class="image">
+      <div id="image-preview-container2" class="card">
+        <img style="width: 50% ; object-fit: cover;margin-left: 275px; height: 371.953px"  th:src="*{image}"
+             alt="Avatar's" src="">
+        <input type="hidden" th:value="*{image}">
+        <div>
+          <input type="hidden" id="upload-file" multiple accept=".jpg, .jpeg, .png"
+                 onchange="limitFiles(this,1)" style="border: none">
+          <input name="image2" type="hidden" id="image2" th:field="*{image}"
+                 required>
+        </div>
+        <input id="add-img-edit" type="file" hidden="hidden" multiple class="inps" onchange="handleUpload()">
+        <input id="parking-id-edit" type="hidden">
+        <input id="linkNewImg" type="hidden">
+        <input id="linkDelImg" type="hidden">
+      </div>
+
+    </div>
+    <h1 th:text="${yard.name}"></h1>
+    <p th:text="${yard.description}"></p>
+    <h4><i class='bx bxs-map'></i> Địa chỉ</h4>
+    <p th:text="${yard.address}"></p>
+    <h4><i class='bx bx-money-withdraw'></i> Giá</h4>
+    <p >Chỉ từ <span th:text="${#numbers.formatDecimal(yard.price, 0, 'COMMA', 0, 'POINT')}"></span> VND/Giờ</p>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script>
+  function limitFiles(input, maxFiles) {
+    if (input.files.length > maxFiles) {
+      alert(`Chỉ được chọn đúng ${maxFiles} tệp.`);
+      input.value = ""; // Xóa tệp đã chọn nếu vượt quá giới hạn
+    }
+  }
+  document.getElementById("upload-file").addEventListener("change", function (e) {
+    const container = document.getElementById("image-preview-container2");
+    container.innerHTML = "";
+    const maxFiles = 1;
+    const files = e.target.files;
+    if (files.length !== maxFiles) {
+      alert(`Bạn phải chọn đúng ${maxFiles} tệp.`);
+      e.target.value = "";
+      return;
+    }
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      img.style.width = "10rem"
+      img.style.height = "10rem"
+      img.style.margin = "7px";
+      container.appendChild(img);
+    }
+  });
+</script>
+<script type="module" src="/js/upload-lam.js"></script>
+<script type="module" src="/js/configulation.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+</body>
+</html>

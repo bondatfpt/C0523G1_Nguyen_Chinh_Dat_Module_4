@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking</title>
+  <link rel="stylesheet" href="/public/customer/edit.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppimns', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      padding: 10px;
+      background: linear-gradient(135deg, #e1d6d6, #ffffff);
+    }
+
+    .container1 {
+      max-width: 700px;
+      width: 100%;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 5px;
+    }
+
+    .container .title {
+      font-size: 25px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .container .title::before {
+      content: '';
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 30px;
+      background: linear-gradient(135deg, #e1d6d6, #ffffff);
+    }
+
+    .container form .user-details {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    form .user-details .input -box {
+      margin: 20px 0 12px 0;
+      width: calc(100% / 2 - 20px);
+
+    }
+
+    .user-details .input-box .details {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .user-details .input-box input {
+      height: 45px;
+      width: 100%;
+      outline: none;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      padding-left: 15px;
+      font-size: 16px;
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+    }
+    select {
+      height: 45px;
+      width: 100%;
+      outline: none;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      padding-left: 15px;
+      font-size: 16px;
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .user-details .input-box input:focus,
+    .user-details .input-box input:valid {
+      border-color: #9b59b6;
+    }
+    form .button {
+      height: 45px;
+      margin: 45px 0;
+    }
+    form .button input {
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+      outline: none;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 5px;
+      letter-spacing: 1px;
+      border: none;
+      transition: ease-in-out 1s;
+      background: linear-gradient(135deg, #e1d6d6, #188038);
+    }
+    form .button input:hover{
+      background: linear-gradient(-135deg, #e1d6d6, #188038);
+    }
+    form .button {
+      height: 45px;
+      margin: 45px 0;
+    }
+
+    form .button .a:first-child {
+      background: linear-gradient(135deg, #188038, #e1d6d6);
+    }
+
+    form .button a {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      height: 100%;
+      width: 100%;
+      outline: none;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 5px;
+      letter-spacing: 1px;
+      border: none;
+      transition: ease-in-out 1s;
+      background: linear-gradient(135deg, #e1d6d6, #188038);
+    }
+
+    form .button a:hover {
+      background: linear-gradient(-135deg, #e1d6d6, #188038);
+    }
+
+    form .button .a:hover {
+      background: linear-gradient(-135deg, #188038, #e1d6d6);
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .function {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .function {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    form .button {
+      height: 45px;
+      margin: 45px 0;
+    }
+
+    form .button .a:first-child {
+      background: linear-gradient(135deg, #188038, #e1d6d6);
+    }
+
+    form .button a {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      height: 100%;
+      width: 100%;
+      outline: none;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 5px;
+      letter-spacing: 1px;
+      border: none;
+      transition: ease-in-out 1s;
+      background: linear-gradient(135deg, #e1d6d6, #188038);
+    }
+
+    form .button a:hover {
+      background: linear-gradient(-135deg, #e1d6d6, #188038);
+    }
+
+    form .button .a:hover {
+      background: linear-gradient(-135deg, #188038, #e1d6d6);
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .function {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light m-0" id="ftco-navbar"
+     style="top: 0px">
+  <div class="container">
+    <a class="navbar-brand" style="color: #14a155">Dat<span>San</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/" class="nav-link">Trang Chủ</a></li>
+        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+            class="nav-item"><a th:text="'Sân'" href="/yards/list" class="nav-link"></a></li>
+        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+            class="nav-item"><a th:text="'Khung thời gian'" href="/times/" class="nav-link"></a></li>
+        <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}"
+            class="nav-item"><a th:text="'Khách hàng'" href="/customers/" class="nav-link"></a></li>
+        <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}"
+            class="nav-item"><a th:text="'Hợp đồng'" href="/bookings/" class="nav-link"></a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and not #authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}">
+          <a href="/yards/" th:text="'Đặt sân'" class="nav-link"></a>
+        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+            class="nav-item"><a th:text="'Nhân viên'" href="/employee/" class="nav-link"></a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and not #authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}">
+          <a href="/accountInfo" th:text="${#request.userPrincipal.name}" class="nav-link"></a>
+        </li>
+        <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'',''ROLE_USER'')')}"
+            class="nav-item"><a th:text="'Đăng xuất'" href="/logout" class="nav-link"></a></li>
+        <li th:unless="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'',''ROLE_USER'')')}"
+            class="nav-item"><a th:text="'Đăng nhập'" href="/login" class="nav-link"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!--thông báo thêm thành công-->
+<div th:if="${message}">
+  <span th:text="${message}" id="success" style="display: none"></span>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let fail = document.getElementById("success").innerText;
+    console.log(fail)
+    Swal.fire({
+      title: fail,
+      icon: 'success',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+  });
+</script>
+<!--end-->
+<div style="display: flex;justify-content: center; align-items: center;margin-top: 2rem">
+  <div class="container1">
+    <div class="title" style="font-size: 32px">Sửa booking</div>
+    <form style="margin-top: 1rem" action="/bookings/update" method="post" th:object="${bookingDto}">
+      <div><input type="hidden" name="userName" th:value="${userName}"></div>
+
+      <div><input type="hidden" th:field="*{id}"></div>
+      <div class="user-details">
+        <div class="input-box">
+          <span class="details">Khách hàng</span>
+          <input th:value="${bookingDto.customer.name}" type="text" disabled>
+          <input type="hidden" th:field="*{customer}">
+        </div>
+        <div class="input-box">
+          <span class="details">Cọc</span>
+          <!--        <input th:field="*{deposit}" type="text" disabled>-->
+          <input th:value="${#numbers.formatDecimal(bookingDto.deposit, 0, 'COMMA', 0, 'POINT')}" type="text" disabled>
+          <input th:field="*{deposit}" type="hidden">
+        </div>
+        <div class="input-box">
+          <span for="formGroupExampleInput1" class="details">Sân</span>
+          <select id="formGroupExampleInput1" name="yard" th:field="*{yard}">
+            <option th:each="yard : ${yardList}" th:value="${yard.id}" th:text="${yard.name}"></option>
+          </select>
+        </div>
+        <div class="input-box">
+          <span class="details">Ngày</span>
+          <input th:field="*{bookingDate}" type="date" placeholder="Chọn ngày" required>
+          <small style="color: red" th:if="${#fields.hasErrors('bookingDate')}"
+                 th:errors="*{bookingDate}"></small>
+          <small style="color: red" th:if="${error != null}"
+                 th:text="${error}"></small>
+        </div>
+        <div class="input-box">
+          <span for="formGroupExampleInput5" class="details">Khung giờ</span>
+          <select id="formGroupExampleInput5" name="time" th:field="*{time}">
+            <option th:each="time : ${timeList}" th:value="${time.id}" th:text="${time.time}"></option>
+          </select>
+          <small style="color: red" th:if="${#fields.hasErrors('time')}"
+                 th:errors="*{time}"></small>
+          <small style="color: red" th:if="${full != null}"
+                 th:text="${full}"></small>
+        </div>
+      </div>
+      <div class="function">
+        <div class="button">
+          <a class="a" href="/bookings/">Quay lại </a>
+        </div>
+        <div class="button">
+          <input type="submit" value="Chỉnh sửa">
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>

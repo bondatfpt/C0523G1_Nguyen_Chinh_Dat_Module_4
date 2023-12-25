@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/public/login/css/style.css" rel="stylesheet">
+    <link href="/public/login/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/login/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/public/login/css/bootstrap.css" rel="stylesheet">
+    <link href="/public/login/css/owl.carousel.min.css" rel="stylesheet">
+    <title>Trang đăng nhập</title>
+</head>
+<body>
+<div class="form-02-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="_lk_de">
+                    <div class="form-03-main">
+                        <div class="logo">
+                            <img src="/public/login/images/user.png">
+                        </div>
+                        <div th:if="${#request.getParameter('error') == 'true'}">
+                            <span style="color:#ff4400;" th:text="'Sai tên tài khoản hoặc mật khẩu!'"></span>
+                        </div>
+                        <form th:action="@{/j_spring_security_check}" method='POST'>
+                            <div class="form-group">
+                                <input style="padding: 10px" type="text" class="form-control _ge_de_ol"
+                                       placeholder="Nhập tên tài khoản"
+                                       name="username" required="" aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <input style="padding: 10px" type="password" autocomplete="current-password"
+                                       class="form-control _ge_de_ol"
+                                       name="password" placeholder="Nhập mật khẩu" required aria-required="true">
+                            </div>
+
+                            <div class="checkbox form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember-me" id="remember">
+                                    <label style="color: white" class="form-check-label" for="remember">
+                                        Ghi nhớ tài khoản
+                                    </label>
+                                </div>
+                                <a th:href="@{/showFormSendEmail}" style="color: white">Quên tài khoản?</a>
+                            </div>
+                            <div class="form-group">
+                                <button style="color: white;color: white;font-weight: 700;font-size: 18px;"
+                                        type="submit" class="_btn_04">
+                                    Đăng nhập
+                                </button>
+                            </div>
+                        </form>
+                        <div>
+                            <a th:href="@{/signup}" style="text-align: center; display: block;color: white">Chưa có tài
+                                khoản? Đăng ký </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const firstInput = document.querySelector('input');
+        if (firstInput) {
+            firstInput.focus();
+        }
+    });
+</script>
+</html>

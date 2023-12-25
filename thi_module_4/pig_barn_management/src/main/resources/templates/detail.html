@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chi tiết</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <style>
+        .bg-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<section class="bg-image">
+    <div class="mask d-flex align-items-center gradient-custom-3" style="width: 100%">
+        <div class="container ">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <div style="text-align: center" class="form-outline mb-4"><h2>Trang chi tiết</h2></div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label">Mã bài đăng</label>
+                                <input th:value="${postDetail.id}" readonly type="text"
+                                       class="form-control form-control-lg"/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label">Tiêu đề</label>
+                                <input th:value="${postDetail.title}" readonly type="text" style=" background-color: white; color: black" disabled
+                                       class="form-control form-control-lg"/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label">Nội dung</label>
+                                <input readonly th:value="${postDetail.content}" type="text" class="form-control form-control-lg"/>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label">Danh mục</label>
+                                <input readonly th:value="${postDetail.category.name}" type="text" class="form-control form-control-lg"/>
+
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label">Ngày đăng</label>
+                                <input th:value="${postDetail.datePost}" type="date" style=" background-color: white; color: black" readonly disabled
+                                       class="form-control form-control-lg"/>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label">Phóng viên</label>
+                                <input readonly th:value="${postDetail.author}"  type="text" class="form-control form-control-lg"/>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <a href="/" class="btn btn-primary" style="margin-left: 110px;padding: 15px;border: none;border-radius: 35px;width: 50%;"
+                                        id="submitButton" type="submit">
+                                    Quay lại
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="/public/signup/validate_form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

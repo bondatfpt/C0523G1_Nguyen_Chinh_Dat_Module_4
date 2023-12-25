@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .form-outline {
+            height: 7.5rem;
+        }
+    </style>
+</head>
+<body>
+<section style="height: 100vh; display: flex;justify-content: center; align-items: center;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-6">
+                    <div class="col-md-12">
+                        <div class="card-body text-black" style="padding: 20px 50px">
+                            <form onsubmit="disableButton()" id="registrationForm" action="/new"
+                                  method='POST'>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="fullName">Họ và tên</label>
+                                            <input th:field="*{customerCreate.name}" required type="text" id="fullName"
+                                                   class="form-control form-control-lg"/>
+                                        </div>
+
+
+                                        <div class="form-outline ">
+                                            <label class="form-label" for="email">Email</label>
+                                            <input th:field="*{customerCreate.email}" required onblur="validateEmail()"
+                                                   onfocus="clearErrorEmail()" type="text"
+                                                   id="email" class="form-control form-control-lg "/>
+                                            <span style="color:red;" id="emailFormatError"></span>
+                                            <p class="text-danger" role="alert" th:text="${emailError}"></p>
+                                        </div>
+
+                                        <div class="form-outline ">
+                                            <label class="form-label" for="address">Địa chỉ</label>
+                                            <input th:field="*{customerCreate.address}" required type="text"
+                                                   id="address"
+                                                   class="form-control form-control-lg "/>
+                                        </div>
+                                        <div class="form-outline ">
+                                            <label class="form-label" for="dateOfBirth">Sinh nhật</label>
+                                            <input th:field="*{customerCreate.birthDay}" required type="date"
+                                                   id="dateOfBirth"
+                                                   class="form-control form-control-lg "/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="phoneNumber">Số điện thoại</label>
+                                            <input th:field="*{customerCreate.phoneNumber}" required
+                                                   onblur="validatePhoneNumber()" onfocus="clearErrorPhoneNumber()"
+                                                   type="text" id="phoneNumber" class="form-control form-control-lg "/>
+                                            <span style="color:red;" id="phoneNumberFormatError"></span>
+                                            <p class="text-danger" role="alert" th:text="${phoneNumberError}"></p>
+                                        </div>
+
+                                        <div class="form-outline ">
+                                            <label class="form-label" for="userName">Tên tài khoản</label>
+                                            <input required onblur="validateUserName()" onfocus="clearErrorUserName()"
+                                                   name="username" th:field="*{accountCreate.userName}" type="text"
+                                                   id="userName" class="form-control form-control-lg "/>
+                                            <span style="color:red;" id="userNameFormatError"></span>
+                                            <p class="text-danger" role="alert" th:text="${userNameError}"></p>
+                                        </div>
+
+                                        <div class="form-outline">
+                                            <label class="form-label" for="password">Mật khẩu</label>
+                                            <input required name="password" th:field="*{accountCreate.password}"
+                                                   type="password"
+                                                   onblur="validatePassword()" onfocus="clearErrorPassword()"
+                                                   id="password" class="form-control form-control-lg "/>
+                                            <span style="color:red;" id="passwordFormatError"></span>
+
+                                        </div>
+
+                                        <div class="form-outline">
+                                            <label class="form-label" for="passwordConfirm">Nhập lại mật khẩu</label>
+                                            <input required onblur="validatePasswordConfirm()"
+                                                   onfocus="clearErrorPasswordConfirm()" type="password"
+                                                   id="passwordConfirm"
+                                                   class="form-control form-control-lg "/>
+                                        </div>
+                                        <span style="color:red;" id="passwordConfirmFormatError"></span>
+                                        <input id="success" type="hidden" th:value="${successSignup}">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button style="margin-right: 20px; background-color: green; font-weight: 400;color: white"
+                                            onclick="redirectLogin()" id="btn-login" type="submit" class="btn btn-lg ">
+                                        Đăng
+                                        nhập
+                                    </button>
+                                    <button style="background-color: green; font-weight: 400; color: white"
+                                            id="submitButton" type="submit" class="btn  btn-lg">Đăng
+                                        ký
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/public/signup/validate_form.js"></script>
+<script>
+    function disableButton() {
+        document.getElementById("submitButton").disabled = true;
+    }
+
+    let input = document.getElementById("success").value;
+    if (input) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Đăng ký thành công!',
+            text: 'Bạn đã đăng ký thành công.Hãy đăng nhập gmail để kích hoạt tài khoản và sử dụng dịch vụ tại DATSAN',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/gmail';
+            }
+        });
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const firstInput = document.querySelector('input');
+        if (firstInput) {
+            firstInput.focus();
+        }
+    });
+
+    function redirectLogin() {
+        window.location.href = "/login";
+    }
+</script>
+</body>
+</html>

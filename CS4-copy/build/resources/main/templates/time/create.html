@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Time</title>
+  <link rel="stylesheet" href="/public/customer/edit.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppimns', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      background: linear-gradient(135deg, #e1d6d6, #188038);
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 5px;
+    }
+
+    .container .title {
+      font-size: 25px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .container .title::before {
+      content: '';
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 30px;
+      background: linear-gradient(135deg, #e1d6d6, #188038);
+    }
+
+    .container form .user-details {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    form .user-details .input -box {
+      margin: 20px 0 12px 0;
+      width: calc(100% / 2 - 20px);
+    }
+
+    .user-details .input-box .details {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .user-details .input-box input {
+      height: 45px;
+      width: 100%;
+      outline: none;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      padding-left: 15px;
+      font-size: 16px;
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .user-details .input-box input:focus,
+    .user-details .input-box input:valid {
+      border-color: #9b59b6;
+    }
+    form .button {
+      height: 45px;
+      margin: 45px 0;
+    }
+    form .button input {
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+      outline: none;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 5px;
+      letter-spacing: 1px;
+      border: none;
+      transition: ease-in-out 1s;
+      background: linear-gradient(135deg, #e1d6d6, #188038);
+    }
+    form .button input:hover{
+      background: linear-gradient(-135deg, #e1d6d6, #188038);
+    }
+  </style>
+
+</head>
+<body>
+<!--thông báo thêm thành công-->
+<div th:if="${message}">
+  <span th:text="${message}" id="success" style="display: none"></span>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let fail = document.getElementById("success").innerText;
+    console.log(fail)
+    Swal.fire({
+      title: fail,
+      icon: 'success',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+  });
+</script>
+<!--end-->
+<div class="container">
+  <div class="title">Thêm giờ hoạt động</div>
+  <form action="/times/create" method="post" th:object="${timeDto}">
+    <div class="user-details">
+      <div class="input-box">
+        <span class="details">Giờ</span>
+        <input th:field="*{time}" type="text"  placeholder="Nhập thời gian" required>
+        <small style="color: red" th:if="${#fields.hasErrors('time')}" th:errors="*{time}"></small>
+      </div>
+    </div>
+
+    <div class="button">
+      <input type="submit" value="Xong">
+    </div>
+    <div><a style="padding: 0.7rem 1rem; background-color: #188038;border-radius: 10px; text-decoration: none; color: black" href="/times">Trở về</a></div>
+
+  </form>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>

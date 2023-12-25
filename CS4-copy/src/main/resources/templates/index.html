@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đặt Sân</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/public/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/animate.css">
+    <link rel="stylesheet" href="/public/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/public/css/magnific-popup.css">
+    <link rel="stylesheet" href="/public/css/aos.css">
+    <link rel="stylesheet" href="/public/css/ionicons.min.css">
+    <link rel="stylesheet" href="/public/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/public/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/public/css/flaticon.css">
+    <link rel="stylesheet" href="/public/css/icomoon.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+
+    <!--    BoxIcons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--    Bootstrap 5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        a {
+            text-decoration: none;
+        }
+        @keyframes blink {
+            0% { opacity: 1; color: whitesmoke } /* Trạng thái ban đầu */
+            50% { opacity: 0.5; color: whitesmoke} /* Trạng thái ẩn */
+            100% { opacity: 1; color: whitesmoke} /* Trạng thái hiện */
+        }
+        .blink-element {
+            animation: blink 0.7s infinite; /* Áp dụng animation với thời gian 1s và lặp vô hạn */
+            border-radius: 25px;
+            text-transform: uppercase;
+            font-size: larger;
+        }
+        #blink-element {
+            animation: blink 0.7s infinite; /* Áp dụng animation với thời gian 1s và lặp vô hạn */
+            border-radius: 25px;
+            text-transform: uppercase;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light m-0" id="ftco-navbar"
+     style="top: 0px">
+    <div class="container">
+        <a href="/" class="navbar-brand" style="color: #14a155; font-size: larger;font-weight: bold">DATSAN</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a class="nav-link">Trang Chủ</a></li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                    class="nav-item"><a th:text="'Sân'" href="/yards/list" class="nav-link"></a></li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}"
+                    class="nav-item"><a th:text="'Khách hàng'" href="/customers/" class="nav-link"></a></li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}"
+                    class="nav-item"><a th:text="'Hợp đồng'" href="/bookings/" class="nav-link"></a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and not #authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}">
+                    <a href="/yards/" th:text="'Đặt sân'" class="nav-link"></a>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                    class="nav-item"><a th:text="'Nhân viên'" href="/employee/" class="nav-link"></a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and not #authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'')')}">
+                    <a href="/accountInfo" th:text="${#request.userPrincipal.name}" class="nav-link"></a>
+                </li>
+                <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'',''ROLE_USER'')')}"
+                    class="nav-item"><a th:text="'Đăng xuất'" href="/logout" class="nav-link"></a></li>
+                <li th:unless="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_EMPLOYEE'',''ROLE_USER'')')}"
+                    class="nav-item"><a th:text="'Đăng nhập'" href="/login" class="nav-link"></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+<div class="hero-wrap ftco-degree-bg"
+     style="background-image: url('/public/images/background.jpg');"
+     data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
+            <div class="col-lg-8 ftco-animate">
+                <div class="text w-100 text-center mb-md-5 pb-md-5">
+                    <h1 style="font-size: 3.5rem" class="mb-4">Chọn Sân Ngay Đá Cực Bay</h1>
+                    <p style="font-size: 28px;">Cập nhật thông tin mới nhất về các sân bóng đá
+                        </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section ftco-no-pt bg-light">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-12	featured-top">
+                <div class="row no-gutters">
+                    <div class="col-md-4 d-flex align-items-center">
+                        <form action="/yards/" class="request-form ftco-animate bg-primary">
+                            <h2>Chọn một khu vực để tìm kiếm</h2>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01"><i
+                                        class='bx bxs-map'></i></label>
+                                <select class="form-select" id="inputGroupSelect01" name="nameSearch">
+                                    <option selected>Quận huyện</option>
+                                    <option value="lien chieu">Liên Chiểu</option>
+                                    <option value="hoa vang">Hòa Vang</option>
+                                    <option value="hai chau">Hải Châu</option>
+                                    <option value="thanh khe">Thanh Khê</option>
+                                    <option value="ngu hanh son">Ngũ Hành Sơn</option>
+                                    <option value="son tra">Sơn Trà</option>
+                                    <option value="cam le">Cẩm Lệ</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Tìm kiếm sân bóng</button>
+                                <!--                                <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">-->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-8 d-flex align-items-center">
+                        <div class="services-wrap rounded-right w-100">
+                            <h3 class="heading-section mb-4">Cách tốt nhất để thuê những sân bóng tốt nhất cho bạn</h3>
+                            <div class="row d-flex mb-4">
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center"><span
+                                        ><i class='bx bx-map' ></i></span></div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Chọn địa điểm của bạn</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center"><span
+                                               ><i class='bx bx-credit-card' ></i></span></div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Chọn giao dịch tốt nhấtl</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="services w-100 text-center">
+                                        <div class="icon d-flex align-items-center justify-content-center"><span
+                                        ><i class='bx bx-football' style='color:#5aaeff'></i></span></div>
+                                        <div class="text w-100">
+                                            <h3 class="heading mb-2">Đặt thuê sân của bạn</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="blink-element" style="text-align:center "><a id="blink-element" style="font-weight: bold" href="/yards/" class="btn btn-success py-3 px-4">Đặt Sân Ngay</a></p>                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--<section class="ftco-section ftco-no-pt bg-light">-->
+<!--    <div class="container">-->
+<!--        <div class="row justify-content-center">-->
+<!--            <div class="col-md-12 heading-section text-center ftco-animate mb-5">-->
+<!--                <span class="subheading">NHỮNG GÌ CHÚNG TÔI CUNG CẤP</span>-->
+<!--                <h2 class="mb-2">Sân nổi bật</h2>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-12">-->
+<!--                <div class="carousel-car owl-carousel">-->
+<!--                    <div class="item">-->
+<!--                        <div class="car-wrap rounded ftco-animate">-->
+<!--                            <div class="img rounded d-flex align-items-end">-->
+<!--                            </div>-->
+<!--                            <div class="text">-->
+<!--                                <h2 class="mb-0"><a href="#">Sân 1</a></h2>-->
+<!--                                <div class="d-flex mb-3">-->
+<!--                                    <span class="cat">Cheverolet</span>-->
+<!--                                    <p class="price ml-auto">$500 <span>/day</span></p>-->
+<!--                                </div>-->
+<!--                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Đặt Sân-->
+<!--                                </a> <a href="#" class="btn btn-secondary py-2 ml-1">Chi tiết</a></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="item">-->
+<!--                        <div class="car-wrap rounded ftco-animate">-->
+<!--                            <div class="img rounded d-flex align-items-end">-->
+<!--                            </div>-->
+<!--                            <div class="text">-->
+<!--                                <h2 class="mb-0"><a href="#">Sân 2</a></h2>-->
+<!--                                <div class="d-flex mb-3">-->
+<!--                                    <span class="cat">Cheverolet</span>-->
+<!--                                    <p class="price ml-auto">$500 <span>/day</span></p>-->
+<!--                                </div>-->
+<!--                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Đặt sân-->
+<!--                                </a> <a href="#" class="btn btn-secondary py-2 ml-1">Chi tiết</a></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="item">-->
+<!--                        <div class="car-wrap rounded ftco-animate">-->
+<!--                            <div class="img rounded d-flex align-items-end">-->
+<!--                            </div>-->
+<!--                            <div class="text">-->
+<!--                                <h2 class="mb-0"><a href="#">Sân 3</a></h2>-->
+<!--                                <div class="d-flex mb-3">-->
+<!--                                    <span class="cat">Cheverolet</span>-->
+<!--                                    <p class="price ml-auto">$500 <span>/day</span></p>-->
+<!--                                </div>-->
+<!--                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Đặt Sân-->
+<!--                                </a> <a href="#" class="btn btn-secondary py-2 ml-1">Chi tiết</a></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="item">-->
+<!--                        <div class="car-wrap rounded ftco-animate">-->
+<!--                            <div class="img rounded d-flex align-items-end">-->
+<!--                            </div>-->
+<!--                            <div class="text">-->
+<!--                                <h2 class="mb-0"><a href="#">Sân 4</a></h2>-->
+<!--                                <div class="d-flex mb-3">-->
+<!--                                    <span class="cat">Cheverolet</span>-->
+<!--                                    <p class="price ml-auto">$500 <span>/day</span></p>-->
+<!--                                </div>-->
+<!--                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Đặt Sân-->
+<!--                                </a> <a href="#" class="btn btn-secondary py-2 ml-1">Chi tiết</a></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+
+    <div >
+        <div class="" style="display: grid; grid-template-columns: repeat(2 , 1fr)" >
+           <div>
+               <img style="width: 100%" src="https://cdnphoto.dantri.com.vn/L_EaeBXUiRsSCSuzeNzctIlDG8c=/thumb_w/1020/2023/08/30/ronaldo-al-nassr-1693361522861.jpeg" alt="">
+           </div>
+            <div style="align-items: center; padding: 3rem ">
+                <div>
+                    <h2 class="">Chào mừng bạn đến với đặt sân</h2>
+
+                    <p>Bóng đá có lẽ là môn thể thao mà bất kỳ ai cũng yêu thích. Ngoài giúp bản thân rèn luyện sức
+                        khỏe. Nó còn giúp con người ta giải tỏa rất nhiều khía cạnh khác. Bạn là một người đang sinh
+                        sống và làm việc tại Đà Nẵng. Bạn muốn tìm kiếm một sân bóng mini để có thể giao lưu bóng đá khi
+                        cần. Hãy để chúng tôi giới thiệu đến bạn địa chỉ sân bóng nhân tạo tại đà nẵng. Hãy theo dõi bài
+                        viết để có thêm cho mình nhiều sựa lựa chọn hợp lí.
+                        Danh sách các sân bóng đá cỏ nhân tạo tại Đà Nẵng, Cập nhật thông tin, tình trạng các sân bóng
+                        đá mini cỏ nhân tạo tại Đà Nẵng mới nhất.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<section class="ftco-section testimony-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">Nhà tài trợ</span>
+                <h2 class="mb-3">Chủ sân</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2"
+                                 style="background-image: url(https://nguoinoitieng.tv/images/nnt/102/2/bgah.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Luôn cháy hết mình trong từng trận đấu, những khoảnh khắc của bạn sẽ
+                                    được anh ấy truyền tải một cách cảm xúc nhất có thể</p>
+                                <p class="name">Nguyễn Phúc Quý</p>
+                                <span class="position">Thành Viên</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2"
+                                 style="background-image: url(https://kenh14cdn.com/2020/10/30/photo-1-16040664658381163415876.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Luôn cháy hết mình trong từng trận đấu, những khoảnh khắc của bạn sẽ
+                                    được anh ấy truyền tải một cách cảm xúc nhất có thể</p>
+                                <p class="name">Nguyễn Chính Đạt</p>
+                                <span class="position">Thành Viên</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2"
+                                 style="background-image: url(https://thegioidienanh.vn/stores/news_dataimages/thanhtan/082017/12/17/5937__MG_3738.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Luôn cháy hết mình trong từng trận đấu, những khoảnh khắc của bạn sẽ
+                                    được chị ấy truyền tải một cách cảm xúc nhất có thể</p>
+                                <p class="name">Đoàn Thị Mỹ Liên</p>
+                                <span class="position">Truởng nhóm</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap rounded text-center py-4 pb-5">
+                            <div class="user-img mb-2"
+                                 style="background-image: url(https://career.gpo.vn/uploads/images/tin-tuc/anh-bai-viet/gpo-caster-binh-luan-vien-e-sport-chuyen-nghiep-1.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Luôn cháy hết mình trong từng trận đấu, những khoảnh khắc của bạn sẽ
+                                    được anh ấy truyền tải một cách cảm xúc nhất có thể</p>
+                                <p class="name">Trần Văn Lâm</p>
+                                <span class="position">Thành Viên</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2"><a href="#" class="logo">DAT<span>SAN</span></a></h2>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Information</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">About</a></li>
+                        <li><a href="#" class="py-2 d-block">Services</a></li>
+                        <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
+                        <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
+                        <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Customer Support</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">FAQ</a></li>
+                        <li><a href="#" class="py-2 d-block">Payment Option</a></li>
+                        <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
+                        <li><a href="#" class="py-2 d-block">How it works</a></li>
+                        <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Have a Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="text">280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng</span>
+                            </li>
+                            <li><a href="#"><span
+                                    class="text">+2 392 3929 210</span></a></li>
+                            <li><a href="#"><span class="text">c0523g1.nhom.1@gmail.com</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                    All rights reserved
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/public/js/popper.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.easing.1.3.js"></script>
+<script src="/public/js/jquery.waypoints.min.js"></script>
+<script src="/public/js/jquery.stellar.min.js"></script>
+<script src="/public/js/owl.carousel.min.js"></script>
+<script src="/public/js/jquery.magnific-popup.min.js"></script>
+<script src="/public/js/aos.js"></script>
+<script src="/public/js/jquery.animateNumber.min.js"></script>
+<script src="/public/js/bootstrap-datepicker.js"></script>
+<script src="/public/js/jquery.timepicker.min.js"></script>
+<script src="/public/js/scrollax.min.js"></script>
+<script src="/public/js/google-map.js"></script>
+<script src="/public/js/main.js"></script>
+<!--Boostrap-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
